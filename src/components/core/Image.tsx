@@ -1,5 +1,6 @@
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { localAssetUrl } from "@/lib/content/assets";
+import { fixturesAllowed } from "@/lib/forms/constants";
 import { dataset, PLACEHOLDER_PROJECT_ID, projectId } from "@/sanity/env";
 
 export type ImageValue = {
@@ -20,7 +21,7 @@ const builder = createImageUrlBuilder({ projectId, dataset });
  */
 export function imageUrl(source: unknown, width = 1600): string | undefined {
   const asset = (source as ImageValue | undefined)?.asset;
-  if (process.env.CONTENT_SOURCE === "fixtures" || projectId === PLACEHOLDER_PROJECT_ID) {
+  if (fixturesAllowed() || projectId === PLACEHOLDER_PROJECT_ID) {
     const local = localAssetUrl(asset?._ref ?? asset?._id ?? "");
     if (local) return local;
   }

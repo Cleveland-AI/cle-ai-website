@@ -53,6 +53,11 @@ describe("query() over fixtures with VISIBLE_NOW", () => {
     expect(await visibleIds()).toEqual(["post-future", "post-past", "post-plain"]);
   });
 
+  it("refuses fixtures on Vercel instead of serving test content (I3, R30)", async () => {
+    vi.stubEnv("VERCEL", "1");
+    await expect(visibleIds()).rejects.toThrow(/CONTENT_SOURCE=fixtures/);
+  });
+
   it("passes params through", async () => {
     const title = await query<string | null>(`*[_id == $id][0].title`, { id: "post-past" });
     expect(title).toBe("Past");

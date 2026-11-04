@@ -18,7 +18,7 @@ Choose **New post** and pick a starter. Each one pre-fills the post "Kind" and a
 - **Article**: a blank body.
 - **Announcement**: a body plus a buttons block.
 
-Fill in the title, author, categories, featured image and excerpt. Use the **Presentation** tool (the preview tab in Studio) to see how a draft will look before you publish.
+Fill in the title, author, categories, featured image and excerpt. Use the **Presentation** tool (the preview tab in Studio) to see how a draft will look before you publish. The preview does not update as you type: reload it after saving a change. A post with a future **Publish on** date shows in the preview too, and stays off the public site until that time.
 
 ### Scheduling a post: "Publish on"
 
@@ -49,7 +49,7 @@ Events come from Meetup once a day. The sync owns the title, time, venue, descri
 
 ### Other things you can edit
 
-- **Site settings**: the announcement bar, the 501(c)(3)/EIN line, and the Substack, Givebutter and Poptin settings.
+- **Site settings**: the menus, the announcement bar and the 501(c)(3)/EIN line. The Substack and Givebutter embed addresses and the Poptin pixel id are set in code (`src/lib/poptin.ts`, the embed blocks and `src/lib/security-headers.ts`), so a change to them is a small pull request.
 - **Form submissions**: a saved copy of every "Pitch a talk" and "Sponsor inquiry" (the email to info@cle-ai.com is the main copy). These are personal data, so treat them accordingly.
 - **Pages**: the privacy policy is a draft awaiting board and counsel review (see its Review status); don't change its wording.
 
@@ -82,7 +82,7 @@ With no Sanity project set, the app uses a placeholder project id so it builds a
 npm run check
 ```
 
-Runs the type check, lint, unit tests (Vitest), a build against the fixtures, and the end-to-end tests (Playwright). It must be green before a change merges. Also available: `npm run typecheck`, `lint`, `test`, `e2e`, and `npm run visual` (look comparison against a local WordPress test site; needs Docker and is not part of `check`).
+Runs the type check, lint, unit tests (Vitest), a build against the fixtures, and the end-to-end tests (Playwright). It must be green before a change merges. Also available: `npm run typecheck`, `lint`, `test`, `e2e`, and `npm run visual` (look comparison against the WordPress theme's Docker test site on localhost:8090; that site comes from the original theme workspace, not this repo, so `visual` cannot run from this repo alone, and it is not part of `check`).
 
 ### Other scripts
 

@@ -60,7 +60,7 @@ describe("cron route, authorised", () => {
     expect(await res.json()).toEqual({ source: "graphql", fetched: 3, created: 3, updated: 0, unchanged: 0 });
     expect(revalidateTag).toHaveBeenCalledWith("sanity", "max");
     expect(store.get("secrets.meetupSync")).toMatchObject({ _type: "meetupSyncState", refreshToken: "fixture-next-refresh-token" });
-    expect([...store.keys()].filter((k) => k.startsWith("event.")).length).toBe(3);
+    expect([...store.keys()].filter((k) => k.startsWith("event-")).length).toBe(3);
   });
 
   it("reports source ical (and logs an error) when GraphQL fails", async () => {

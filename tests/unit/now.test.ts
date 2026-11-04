@@ -18,6 +18,13 @@ describe("pinnedNow / siteNow's test clock", () => {
     expect(pinnedNow()).toBeNull();
   });
 
+  it("is ignored on Vercel even with the fixtures source (I3, R30)", () => {
+    vi.stubEnv("CONTENT_SOURCE", "fixtures");
+    vi.stubEnv("FIXTURES_NOW", "2026-10-26T18:00:00-04:00");
+    vi.stubEnv("VERCEL", "1");
+    expect(pinnedNow()).toBeNull();
+  });
+
   it("is null when unpinned and refuses a malformed value", () => {
     vi.stubEnv("CONTENT_SOURCE", "fixtures");
     vi.stubEnv("FIXTURES_NOW", "");

@@ -3,11 +3,26 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import generated from "@/lib/redirects/generated.json";
 import { resolveRedirect, sanitizeSanityRedirects, type SanityRedirect } from "@/lib/redirects/map";
+import { PLACEHOLDER_PROJECT_ID } from "@/sanity/env";
+
+/** The Sanity project generated.json's upload redirects point at: the placeholder until step 4.3 regenerates it. */
+const CDN_PROJECT = (generated as { to: string }[]).find((g) => g.to.startsWith("https://cdn.sanity.io/images/"))!.to.split("/")[4];
 
 const r = (url: string, sanity: SanityRedirect[] = []) => {
   const u = new URL(url, "https://cle-ai.com");
   return resolveRedirect(u.pathname, u.search, sanity);
 };
+
+describe("generated.json (M11)", () => {
+  it("points every upload redirect at the configured Sanity project once one is set", () => {
+    const configured = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_PROJECT_ID;
+    const targets = (generated as { to: string }[]).map((g) => g.to).filter((to) => to.startsWith("https://cdn.sanity.io/images/"));
+    expect(targets.length).toBeGreaterThan(0);
+    const stale = targets.filter((to) => to.split("/")[4] !== (configured || PLACEHOLDER_PROJECT_ID));
+    // Regenerate with step 4.3 of docs/switch-over.md and commit it: stale targets 308 to a dead host.
+    expect(stale).toEqual([]);
+  });
+});
 
 describe("the brief's table", () => {
   const table: [string, string][] = [
@@ -28,7 +43,7 @@ describe("the brief's table", () => {
     ["/feed/", "/feed.xml"],
     ["/newsletter", "https://timcleaidata.substack.com/"],
     ["/index.php/newsletter/", "https://timcleaidata.substack.com/"],
-    ["/wp-content/uploads/2026/09/scene.webp", "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"],
+    ["/wp-content/uploads/2026/09/scene.webp", `https://cdn.sanity.io/images/${CDN_PROJECT}/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp`],
     ["/About/", "/about"],
   ];
   it.each(table)("%s -> %s", (from, to) => expect(r(from)).toBe(to));
@@ -65,7 +80,7 @@ describe("R39 rules", () => {
     ["/index.php/meetup-event/never-seen/", "/events/never-seen"],
     ["/Index.php/ABOUT/", "/about"],
     ["/?s=meetup", "/search?q=meetup"],
-    ["/wp-content/uploads/2026/09/scene-1200x670.webp", "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"],
+    ["/wp-content/uploads/2026/09/scene-1200x670.webp", `https://cdn.sanity.io/images/${CDN_PROJECT}/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp`],
   ];
   it.each(table)("%s -> %s", (from, to) => expect(r(from)).toBe(to));
 

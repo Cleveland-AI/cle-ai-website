@@ -42,4 +42,19 @@ describe("query() and draft mode", () => {
     expect(configs[0]).toMatchObject({ perspective: "drafts", token: "drafts-token", useCdn: false });
     expect(fetchSpy.mock.calls[0][2]).toMatchObject({ cache: "no-store" });
   });
+
+  it("draft mode drops the publishOn filter, so a scheduled post can be previewed (I1)", async () => {
+    const { VISIBLE_NOW } = await import("@/lib/content/filters");
+    const { POST_QUERY } = await import("@/lib/content/queries");
+    const { query } = await import("@/lib/content/client");
+    draft.isEnabled = true;
+    await query(POST_QUERY, { slug: "future" });
+    expect(POST_QUERY).toContain(VISIBLE_NOW);
+    expect(fetchSpy.mock.calls[0][0]).not.toContain(VISIBLE_NOW);
+    expect(fetchSpy.mock.calls[0][0]).toContain('_type == "post"');
+    draft.isEnabled = false;
+    fetchSpy.mockClear();
+    await query(POST_QUERY, { slug: "future" });
+    expect(fetchSpy.mock.calls[0][0]).toContain(VISIBLE_NOW);
+  });
 });

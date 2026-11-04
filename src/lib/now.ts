@@ -1,12 +1,14 @@
 import { cacheLife } from "next/cache";
+import { fixturesAllowed } from "@/lib/forms/constants";
 
 /**
- * The pinned test clock: `FIXTURES_NOW`, honoured only with `CONTENT_SOURCE=fixtures` so a stray
- * variable can never freeze production's clock. Null when not pinned.
+ * The pinned test clock: `FIXTURES_NOW`, honoured only where fixtures are allowed (CONTENT_SOURCE=fixtures,
+ * never on Vercel: fixturesAllowed, R30) so a stray variable can never freeze production's clock.
+ * Null when not pinned.
  */
 export function pinnedNow(): Date | null {
   const pinned = process.env.FIXTURES_NOW;
-  if (process.env.CONTENT_SOURCE !== "fixtures" || !pinned) return null;
+  if (!fixturesAllowed() || !pinned) return null;
   const d = new Date(pinned);
   if (Number.isNaN(d.getTime())) throw new Error(`FIXTURES_NOW is not a date: ${pinned}`);
   return d;

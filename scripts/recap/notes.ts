@@ -183,7 +183,7 @@ const publishedId = (id: string) => id.replace(/^drafts\./, "");
 
 /** "recap-<event slug>", kept to Sanity's id characters (no dots: they'd read as an id path). */
 export function recapSlug(e: Pick<EventDoc, "slug" | "_id">): string {
-  const s = e.slug?.current || publishedId(e._id ?? "").replace(/^event\./, "");
+  const s = e.slug?.current || publishedId(e._id ?? "").replace(/^event[.-]/, "");
   if (!s) throw new Error("The event has no slug or id.");
   return `recap-${s.replace(/[^A-Za-z0-9_-]/g, "-")}`;
 }

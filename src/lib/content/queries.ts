@@ -34,23 +34,6 @@ export const PAGE_BY_SLUG_QUERY = defineQuery(`*[_type == "page" && slug.current
 
 export const PAGE_SLUGS_QUERY = defineQuery(`*[_type == "page" && defined(slug.current)].slug.current`);
 
-export const POST_BY_SLUG_QUERY = defineQuery(
-  `*[_type == "post" && slug.current == $slug && ${VISIBLE_NOW}][0]{
-    ...,
-    author->{ name, slug, role, photo },
-    categories[]->{ title, slug },
-    event->{ title, slug, start, end }
-  }`,
-);
-
-export const POSTS_QUERY = defineQuery(
-  `*[_type == "post" && ${VISIBLE_NOW}] | order(publishedAt desc) [$from...$to]{
-    _id, title, slug, kind, publishedAt, excerpt, featuredImage,
-    author->{ name, slug },
-    categories[]->{ title, slug }
-  }`,
-);
-
 export const EVENT_BY_SLUG_QUERY = defineQuery(`*[_type == "event" && slug.current == $slug][0]`);
 
 /**

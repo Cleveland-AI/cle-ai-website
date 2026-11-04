@@ -39,5 +39,6 @@ describe("search ordering (R24)", () => {
     const params = { terms: ["zebracorns*"], from: 0, to: 10 };
     const res = (await (await evaluate(parse(SEARCH_QUERY, { params }), { dataset, params, timestamp: new Date("2026-10-26T00:00:00Z") })).get()) as { results: { _id: string }[] };
     expect(res.results.map((r) => r._id)).toEqual(["older-title", "newer-body"]);
-  });
+    // The dynamic imports (groq-js, the queries module) can take over 5 s under a full parallel run (M9).
+  }, 30_000);
 });

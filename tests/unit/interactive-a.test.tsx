@@ -179,10 +179,10 @@ describe("person documents (getPeople)", () => {
     const dir = mkdtempSync(join(tmpdir(), "cle-people-"));
     const file = join(dir, "d.ndjson");
     const docs = [
-      { _id: "person.b", _type: "person", name: "Bee", order: 2 },
-      { _id: "person.h", _type: "person", name: "Hidden", order: 0, hidden: true },
-      { _id: "person.a", _type: "person", name: "Ay", order: 1, hidden: false },
-      { _id: "person.c", _type: "person", name: "Cee" },
+      { _id: "person-b", _type: "person", name: "Bee", order: 2 },
+      { _id: "person-h", _type: "person", name: "Hidden", order: 0, hidden: true },
+      { _id: "person-a", _type: "person", name: "Ay", order: 1, hidden: false },
+      { _id: "person-c", _type: "person", name: "Cee" },
     ];
     writeFileSync(file, docs.map((d) => JSON.stringify(d)).join("\n"));
     vi.stubEnv("FIXTURES_PATH", file);

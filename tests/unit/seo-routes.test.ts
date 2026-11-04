@@ -19,7 +19,7 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 const SECRET = "whsec-test";
-const BODY = JSON.stringify({ _type: "post", _id: "post.a", slug: { current: "a" } });
+const BODY = JSON.stringify({ _type: "post", _id: "post-a", slug: { current: "a" } });
 
 async function hook(opts: { secret?: string | null; sign?: boolean | "wrong"; body?: string } = {}) {
   const { POST } = await import("@/app/api/revalidate/route");
@@ -49,6 +49,21 @@ describe("/api/revalidate (R35)", () => {
     const res = await hook();
     expect(res.status).toBe(200);
     expect(revalidateTag).toHaveBeenCalledWith("sanity", { expire: 0 });
+  }, 15_000);
+
+  it("ignores form submissions, the sync's private state, drafts and assets (I4)", async () => {
+    vi.stubEnv("SANITY_REVALIDATE_SECRET", SECRET);
+    for (const doc of [
+      { _type: "submission", _id: "submission.1f0e" },
+      { _type: "meetupSyncState", _id: "secrets.meetupSync" },
+      { _type: "post", _id: "drafts.post-a" },
+      { _type: "sanity.imageAsset", _id: "image-abc-1x1-png" },
+    ]) {
+      const res = await hook({ body: JSON.stringify(doc) });
+      expect(res.status, doc._id).toBe(200);
+      expect(await res.json(), doc._id).toEqual({ revalidated: false, ignored: doc._type });
+    }
+    expect(revalidateTag).not.toHaveBeenCalled();
   }, 15_000);
 });
 

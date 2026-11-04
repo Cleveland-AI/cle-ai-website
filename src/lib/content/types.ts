@@ -959,9 +959,6 @@ export type SiteSettings = {
     rsvpLabel?: string;
     emptyMessage?: string;
   };
-  substackEmbedUrl?: string;
-  givebutterEmbedUrl?: string;
-  poptinId?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -1162,9 +1159,6 @@ export type SITE_SETTINGS_QUERY_RESULT = {
     rsvpLabel?: string;
     emptyMessage?: string;
   };
-  substackEmbedUrl?: string;
-  givebutterEmbedUrl?: string;
-  poptinId?: string;
 } | null;
 
 // Source: src/lib/content/queries.ts
@@ -1202,81 +1196,6 @@ export type PAGE_BY_SLUG_QUERY_RESULT = {
 // Variable: PAGE_SLUGS_QUERY
 // Query: *[_type == "page" && defined(slug.current)].slug.current
 export type PAGE_SLUGS_QUERY_RESULT = Array<string | null>;
-
-// Source: src/lib/content/queries.ts
-// Variable: POST_BY_SLUG_QUERY
-// Query: *[_type == "post" && slug.current == $slug && (!defined(publishOn) || publishOn <= now())][0]{    ...,    author->{ name, slug, role, photo },    categories[]->{ title, slug },    event->{ title, slug, start, end }  }
-export type POST_BY_SLUG_QUERY_RESULT = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug?: Slug;
-  kind?: "announcement" | "article" | "newsletter" | "recap";
-  author: {
-    name: string | null;
-    slug: Slug | null;
-    role: string | null;
-    photo: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
-  } | null;
-  categories: Array<{
-    title: string | null;
-    slug: Slug | null;
-  }> | null;
-  publishedAt?: string;
-  publishOn?: string;
-  featuredImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  excerpt?: string;
-  body?: RichBody;
-  event: {
-    title: string | null;
-    slug: Slug | null;
-    start: string | null;
-    end: string | null;
-  } | null;
-  seo?: Seo;
-} | null;
-
-// Source: src/lib/content/queries.ts
-// Variable: POSTS_QUERY
-// Query: *[_type == "post" && (!defined(publishOn) || publishOn <= now())] | order(publishedAt desc) [$from...$to]{    _id, title, slug, kind, publishedAt, excerpt, featuredImage,    author->{ name, slug },    categories[]->{ title, slug }  }
-export type POSTS_QUERY_RESULT = Array<{
-  _id: string;
-  title: string | null;
-  slug: Slug | null;
-  kind: "announcement" | "article" | "newsletter" | "recap" | null;
-  publishedAt: string | null;
-  excerpt: string | null;
-  featuredImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
-  author: {
-    name: string | null;
-    slug: Slug | null;
-  } | null;
-  categories: Array<{
-    title: string | null;
-    slug: Slug | null;
-  }> | null;
-}>;
 
 // Source: src/lib/content/queries.ts
 // Variable: EVENT_BY_SLUG_QUERY

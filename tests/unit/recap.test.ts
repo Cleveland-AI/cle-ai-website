@@ -208,7 +208,7 @@ describe("findRecapEvent", () => {
   });
 
   it("two events that day is an error listing both", () => {
-    const second: EventDoc = { _id: "event.x", title: "Evening social", slug: { _type: "slug", current: "evening-social" }, start: "2026-10-22T19:00:00-04:00" };
+    const second: EventDoc = { _id: "event-x", title: "Evening social", slug: { _type: "slug", current: "evening-social" }, start: "2026-10-22T19:00:00-04:00" };
     expect(() => findRecapEvent("2026-10-22", [...EVENTS, second])).toThrow(
       /2 events match "2026-10-22":\n {2}2026-10-22  October workshop  \(october-workshop\)\n {2}2026-10-22  Evening social  \(evening-social\)/,
     );
@@ -227,9 +227,9 @@ describe("findRecapEvent", () => {
 describe("pushDraft", () => {
   const draft = buildRecapDraft(event("october-workshop"), parseNotes(NOTES), []);
 
-  it("throws on _id 'post.x'", async () => {
+  it("throws on _id 'post-x'", async () => {
     const client = fakeClient();
-    await expect(pushDraft({ ...draft, _id: "post.x" }, client)).rejects.toThrow(/drafts\./);
+    await expect(pushDraft({ ...draft, _id: "post-x" }, client)).rejects.toThrow(/drafts\./);
     expect(client.create).not.toHaveBeenCalled();
     expect(client.replaceDraft).not.toHaveBeenCalled();
   });

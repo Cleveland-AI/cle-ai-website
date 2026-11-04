@@ -4,6 +4,9 @@ import { evaluate, parse } from "groq-js";
 import { createClient } from "next-sanity";
 import { cacheLife, cacheTag } from "next/cache";
 import { draftMode } from "next/headers";
+import { VISIBLE_NOW } from "@/lib/content/filters";
+import { isHiddenPublicId } from "@/lib/content/ids";
+import { fixturesAllowed, fixturesMisconfigured } from "@/lib/forms/constants";
 import { siteNow } from "@/lib/now";
 import { apiVersion, dataset, PLACEHOLDER_PROJECT_ID, projectId } from "@/sanity/env";
 
@@ -22,7 +25,8 @@ export type QueryOptions = { draft?: boolean };
  *   function: with draft mode on, Next re-runs every cached function on each request and saves nothing.
  */
 export async function query<T>(groq: string, params: QueryParams = {}, opts: QueryOptions = {}): Promise<T> {
-  if (process.env.CONTENT_SOURCE === "fixtures") return (await queryFixtures(groq, params)) as T;
+  refuseMisconfiguredFixtures();
+  if (fixturesAllowed()) return (await queryFixtures(groq, params)) as T;
   if (projectId === PLACEHOLDER_PROJECT_ID) {
     throw new Error(
       "query(): no Sanity project configured. Set NEXT_PUBLIC_SANITY_PROJECT_ID, or CONTENT_SOURCE=fixtures.",
@@ -31,6 +35,18 @@ export async function query<T>(groq: string, params: QueryParams = {}, opts: Que
   if (opts.draft) return queryDrafts<T>(groq, params);
   return (await queryPublished(groq, params)) as T;
 }
+
+/**
+ * CONTENT_SOURCE=fixtures on Vercel (I3, R30): a build there would prerender the test content and its
+ * ISR regenerations would see an empty dataset. Fail loudly instead: at module load, so the Vercel
+ * build stops, and on every call in case the variable appears at runtime only.
+ */
+function refuseMisconfiguredFixtures() {
+  if (fixturesMisconfigured()) {
+    throw new Error("CONTENT_SOURCE=fixtures is set on Vercel. Fixtures are for local tests only: unset it or set CONTENT_SOURCE=sanity.");
+  }
+}
+refuseMisconfiguredFixtures();
 
 // ---- Sanity ----
 
@@ -45,12 +61,18 @@ async function queryPublished(groq: string, params: QueryParams): Promise<unknow
   return client.fetch(groq, params);
 }
 
+/**
+ * Drafts read with the scheduling filter switched off (I1): an editor previewing a post whose
+ * `publishOn` is next Tuesday must see it, not a 404. Only preview requests ever take this path.
+ */
+export const previewGroq = (groq: string) => groq.split(VISIBLE_NOW).join("true");
+
 async function queryDrafts<T>(groq: string, params: QueryParams): Promise<T> {
   const token = process.env.SANITY_API_DRAFTS_TOKEN || process.env.SANITY_API_READ_TOKEN;
   if (!token) throw new Error("query(): draft mode needs SANITY_API_DRAFTS_TOKEN.");
   return client
     .withConfig({ token, useCdn: false, perspective: "drafts" })
-    .fetch<T>(groq, params, { cache: "no-store" });
+    .fetch<T>(previewGroq(groq), params, { cache: "no-store" });
 }
 
 // ---- Fixtures ----
@@ -81,6 +103,17 @@ function loadFixtures(): Doc[] {
       .split("\n")
       .filter((line) => line.trim() !== "")
       .map((line) => JSON.parse(line) as Doc);
+    // Sanity hides dotted ids from the tokenless public client, which groq-js would not show (C1):
+    // refuse such a dataset here so the regression fails every fixtures run instead of production.
+    const hidden = docs.filter((d) => isHiddenPublicId(String(d._id ?? ""), d._type as string | undefined));
+    if (hidden.length) {
+      throw new Error(
+        `query(): ${path} has content ids with a dot, which Sanity hides from the public site: ${hidden
+          .slice(0, 5)
+          .map((d) => String(d._id))
+          .join(", ")}. Use dot-free ids (contentId() in src/lib/content/ids.ts).`,
+      );
+    }
     loaded = { path, mtimeMs, docs };
   }
   return loaded.docs;

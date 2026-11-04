@@ -46,7 +46,7 @@ Most questions were about **cost**.
 ## What the draft contains
 
 - `_id`: `drafts.recap-<event slug>`, so each event has at most one recap draft. The slug is `recap-<event slug>`.
-- `kind: "recap"`, `event` linked to the event, and `publishedAt` set to the time of the run. `publishOn` is left empty.
+- `kind: "recap"`, `event` linked to the event, and `publishedAt` set to the time of the run. `publishOn` is left empty. The reviewer should set **Published at** to the publish time when publishing: otherwise a recap reviewed days later is dated (and ordered in the blog, its archive month and previous/next links) by when the draft was made.
 - The body has the shape of Studio's "Event recap" starter, in this order:
   1. the write-up sections;
   2. a gallery section (`cle-recap-gallery`) with the heading "Photos" and one image per photo, in file-name order, each with alt text `[describe this photo]`;

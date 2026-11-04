@@ -36,24 +36,6 @@ export const siteSettings = defineType({
         defineField({ name: "emptyMessage", title: "Message when nothing is coming up", type: "string" }),
       ],
     }),
-    defineField({
-      name: "substackEmbedUrl",
-      title: "Substack embed URL",
-      type: "url",
-      initialValue: "https://timcleaidata.substack.com/embed",
-    }),
-    defineField({
-      name: "givebutterEmbedUrl",
-      title: "Givebutter embed URL",
-      type: "url",
-      initialValue: "https://givebutter.com/embed/c/cle-ai",
-    }),
-    defineField({
-      name: "poptinId",
-      title: "Poptin pixel id",
-      type: "string",
-      initialValue: "52c969b3a6878",
-    }),
   ],
   preview: { prepare: () => ({ title: "Site settings" }) },
 });

@@ -14,6 +14,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { contentId } from "../../src/lib/content/ids";
+import { slugify } from "../../src/lib/slugify";
 import { PLACEHOLDER_PROJECT_ID } from "../../src/sanity/env";
 import { blockMarkupToRichBody } from "./blocks";
 import { createKeys, type ImageSource, type RichBody, type RichItem } from "./html";
@@ -30,14 +32,7 @@ const STOCK_CONTENT = { post: ["hello-world"], page: ["sample-page"] };
 
 const slug = (current: string) => ({ _type: "slug", current });
 
-export const slugify = (s: string) =>
-  s
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[’']/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+export { slugify };
 
 const normName = (s: string) => s.toLowerCase().replace(/[’`]/g, "'").replace(/\s+/g, " ").trim();
 
@@ -344,7 +339,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
   const people: Doc[] = teamDefaults.map((m, i) => {
     const photo = m.photo ? assetFromFile(join(themeDir, "assets/team", `${m.photo}.webp`)) : undefined;
     return compact({
-      _id: `person.${slugify(m.name ?? `member-${i}`)}`,
+      _id: contentId("person", slugify(m.name ?? `member-${i}`)),
       _type: "person",
       name: m.name,
       slug: slug(slugify(m.name ?? `member-${i}`)),
@@ -365,7 +360,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
     let person = people.find((p) => normName(String(p.name)) === normName(u.name));
     if (!person) {
       // An author who isn't on the team: a person for the byline, hidden from the team list.
-      person = { _id: `person.${u.slug}`, _type: "person", name: u.name, slug: slug(u.slug), lead: false, hidden: true };
+      person = { _id: contentId("person", u.slug), _type: "person", name: u.name, slug: slug(u.slug), lead: false, hidden: true };
       people.push(person);
     }
     personByUser.set(u.id, person);
@@ -376,7 +371,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
   // ---- Categories
   const catById = new Map<number, Doc>();
   for (const c of data.categories) {
-    const doc = compact({ _id: `category.${c.slug}`, _type: "category", title: decode(c.name), slug: slug(c.slug), description: c.description });
+    const doc = compact({ _id: contentId("category", c.slug), _type: "category", title: decode(c.name), slug: slug(c.slug), description: c.description });
     catById.set(c.id, doc);
     docs.push(doc);
   }
@@ -398,7 +393,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
     }
     docs.push(
       compact({
-        _id: `page.${p.slug}`,
+        _id: contentId("page", p.slug),
         _type: "page",
         title: decode(p.title.raw ?? p.title.rendered),
         slug: slug(p.slug),
@@ -412,7 +407,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
   // page) and is marked as awaiting counsel. A production import writes it as an unpublished draft.
   const wpPrivacy = pages.find((p) => p.slug === "privacy");
   docs.push({
-    _id: opts.mediaMode === "import" ? "drafts.page.privacy" : "page.privacy",
+    _id: opts.mediaMode === "import" ? `drafts.${contentId("page", "privacy")}` : contentId("page", "privacy"),
     _type: "page",
     title: wpPrivacy ? decode(wpPrivacy.title.raw ?? wpPrivacy.title.rendered) : "Privacy policy",
     slug: slug("privacy"),
@@ -429,13 +424,13 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
     const author = p.author ? personByUser.get(p.author) : undefined;
     docs.push(
       compact({
-        _id: `post.${p.slug}`,
+        _id: contentId("post", p.slug),
         _type: "post",
         title: decode(p.title.raw ?? p.title.rendered),
         slug: slug(p.slug),
         kind,
         author: author ? { _type: "reference", _ref: author._id } : undefined,
-        categories: cats.length ? cats.map((c) => ({ _type: "reference", _ref: c._id, _key: c._id.replace(/^category\./, "") })) : undefined,
+        categories: cats.length ? cats.map((c) => ({ _type: "reference", _ref: c._id, _key: c._id.replace(/^category-/, "") })) : undefined,
         publishedAt: `${p.date_gmt}Z`,
         featuredImage: featured(p),
         excerpt: (p.excerpt.raw ?? "").trim() || undefined,
@@ -453,7 +448,7 @@ export async function migrate(opts: MigrateOptions): Promise<{ docs: Doc[]; redi
     }
     docs.push(
       compact({
-        _id: f.meetupId ? `event.${f.meetupId}` : `event.wp-${e.id}`,
+        _id: f.meetupId ? contentId("event", f.meetupId) : contentId("event", `wp-${e.id}`),
         _type: "event",
         meetupId: f.meetupId,
         title: decode(e.title.raw ?? e.title.rendered),
@@ -572,9 +567,6 @@ function siteSettings(data: WpData, themeDir: string): Doc {
       rsvpLabel: barAttrs.rsvpLabel ?? nextDefaults.rsvpLabel,
       emptyMessage: barAttrs.emptyText ?? nextDefaults.emptyText,
     },
-    substackEmbedUrl: "https://timcleaidata.substack.com/embed",
-    givebutterEmbedUrl: "https://givebutter.com/embed/c/cle-ai",
-    poptinId: "52c969b3a6878",
   };
 }
 

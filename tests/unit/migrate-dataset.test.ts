@@ -35,7 +35,7 @@ describe("fixture dataset", () => {
     for (const slug of ["about", "sponsors", "get-involved", "code-of-conduct", "privacy", "team-test"]) expect(pages).toContain(slug);
     expect(ofType("post").length).toBeGreaterThanOrEqual(6);
     expect(ofType("event").length).toBeGreaterThanOrEqual(22);
-    expect(ofType("category").map((c) => c._id).sort()).toEqual(["category.blog", "category.meetup", "category.newsletter", "category.podcast"]);
+    expect(ofType("category").map((c) => c._id).sort()).toEqual(["category-blog", "category-meetup", "category-newsletter", "category-podcast"]);
   });
 
   it("uses only document and field names the schema declares", () => {
@@ -75,7 +75,7 @@ describe("fixture dataset", () => {
   });
 
   it("About: the team reads the people; the story is the post-merger one", () => {
-    const about = objects(byId.get("page.about"));
+    const about = objects(byId.get("page-about"));
     const team = about.filter((o) => o._type === "cleTeam");
     expect(team).toHaveLength(1);
     expect(team[0].members).toEqual([]);
@@ -91,7 +91,7 @@ describe("fixture dataset", () => {
   });
 
   it("the team test page holds New Person, with no photo, only there", () => {
-    const team = objects(byId.get("page.team-test")).find((o) => o._type === "cleTeam")!;
+    const team = objects(byId.get("page-team-test")).find((o) => o._type === "cleTeam")!;
     expect(team.members).toEqual([expect.objectContaining({ name: "New Person", photo: "", hidden: false })]);
     expect(ofType("person").some((p) => p.name === "New Person")).toBe(false);
   });
@@ -109,13 +109,13 @@ describe("fixture dataset", () => {
   });
 
   it("the privacy policy has three tables, the host and newsletter filled, and awaits counsel", () => {
-    const privacy = byId.get("page.privacy")!;
+    const privacy = byId.get("page-privacy")!;
     const s = JSON.stringify(privacy);
     expect(objects(privacy).filter((o) => o._type === "table")).toHaveLength(3);
     for (const gone of ["[HOST]", "[NEWSLETTER TOOL]"]) expect(s).not.toContain(gone);
     expect(s).toContain("[ANALYTICS TOOL, e.g., WordPress Stats or Google Analytics 4]");
     expect(privacy.reviewStatus).toBe("draft-awaiting-counsel");
-    expect(ofType("page").filter((p) => p.reviewStatus).map((p) => p._id)).toEqual(["page.privacy"]);
+    expect(ofType("page").filter((p) => p.reviewStatus).map((p) => p._id)).toEqual(["page-privacy"]);
   });
 
   it("the homepage is the front-page template with the post-merger chapter", () => {
@@ -138,14 +138,14 @@ describe("fixture dataset", () => {
     expect(bySlug.get("pop-up-coffee-chat")!.rsvpUrl).toBeUndefined();
     expect(bySlug.get("online-reading-group")!.venue).toBeUndefined();
     const mega = bySlug.get("mega-meetup-at-the-museum")!;
-    expect(mega._id).toBe(`event.${mega.meetupId}`);
+    expect(mega._id).toBe(`event-${mega.meetupId}`);
     expect(mega).toMatchObject({ organizer: "CLE AI & DATA", organizerUrl: "https://www.meetup.com/cleveland-ai-data/", venue: { lat: 41.51152, lng: -81.612877 } });
     const bare = bySlug.get("bare-event")!;
     expect(bare.venue ?? bare.end ?? bare.image).toBeUndefined();
   });
 
   it("the scheduled post is hidden until 2099 and carries its unique word", () => {
-    const p = byId.get("post.scheduled-test-post")!;
+    const p = byId.get("post-scheduled-test-post")!;
     expect(p.publishOn).toBe("2099-01-01T00:00:00Z");
     expect(JSON.stringify(p)).toContain("zebracorn");
   });

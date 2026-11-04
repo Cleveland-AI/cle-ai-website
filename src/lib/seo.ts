@@ -2,6 +2,7 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 import type { Metadata } from "next";
 import { texturize } from "@/components/core/texturize";
 import { localAssetUrl } from "@/lib/content/assets";
+import { fixturesAllowed } from "@/lib/forms/constants";
 import { siteUrl } from "@/lib/posts";
 import { dataset, PLACEHOLDER_PROJECT_ID, projectId } from "@/sanity/env";
 
@@ -41,7 +42,7 @@ const builder = createImageUrlBuilder({ projectId, dataset });
 function ogImage(image: SanityImage): string | undefined {
   const ref = image?.asset?._ref ?? image?.asset?._id;
   if (!ref) return undefined;
-  if (process.env.CONTENT_SOURCE === "fixtures" || projectId === PLACEHOLDER_PROJECT_ID) {
+  if (fixturesAllowed() || projectId === PLACEHOLDER_PROJECT_ID) {
     const local = localAssetUrl(ref);
     if (local) return `${siteUrl()}${local}`;
   }

@@ -11,8 +11,10 @@ export function Columns({ value, children }: { value: ColumnsValue; children: Re
     value.verticalAlignment ? `are-vertically-aligned-${value.verticalAlignment}` : "",
     value.className ?? "",
     "is-layout-flex",
-    // WordPress's block-supports class for a columns block that stacks on mobile: flex-wrap: nowrap
-    // above the breakpoint (every columns block in the theme carries one of these equivalent hashes).
+    // WordPress's block-supports class for the columns block's default layout (flex, flexWrap: nowrap;
+    // core.css). Every columns combination the schema allows (align, className, verticalAlignment,
+    // margin style) produces this same rule; only block gap would change the hash, and block gap is
+    // not editable here. Revisit if it ever becomes editable.
     "wp-container-core-columns-is-layout-e22c4a5e",
     "wp-block-columns-is-layout-flex",
   ].filter(Boolean);

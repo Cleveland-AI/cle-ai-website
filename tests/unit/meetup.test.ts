@@ -109,7 +109,7 @@ describe("toEventDoc", () => {
   it("maps venue, rsvpUrl, status, slug and a sanitised description", async () => {
     const [oct] = (await mapped((n) => (n[0].description = '<p onclick="x()">Hi</p><script>alert(1)</script>'))).map(toEventDoc);
     expect(oct).toMatchObject({
-      _id: "event.310000001",
+      _id: "event-310000001",
       meetupId: "310000001",
       title: "Monthly Social at Happy Dog: October",
       rsvpUrl: "https://www.meetup.com/cleveland-ai-data/events/310000001/",
@@ -138,7 +138,7 @@ describe("syncEvents", () => {
     const { writer, docs } = fakeWriter();
     const r = await syncEvents(await mapped(), writer);
     expect(r).toEqual({ created: 3, updated: 0, unchanged: 0 });
-    expect([...docs.keys()].sort()).toEqual(["event.310000001", "event.310000002", "event.310000003"]);
+    expect([...docs.keys()].sort()).toEqual(["event-310000001", "event-310000002", "event-310000003"]);
   });
 
   it("is idempotent, and a re-sync with one changed title updates only that one", async () => {
@@ -147,7 +147,7 @@ describe("syncEvents", () => {
     expect(await syncEvents(await mapped(), writer)).toEqual({ created: 0, updated: 0, unchanged: 3 });
     const r = await syncEvents(await mapped((n) => (n[1].title = "Monthly Social: November (new name)")), writer);
     expect(r).toEqual({ created: 0, updated: 1, unchanged: 2 });
-    expect(docs.get("event.310000002")?.title).toBe("Monthly Social: November (new name)");
+    expect(docs.get("event-310000002")?.title).toBe("Monthly Social: November (new name)");
     expect(docs.size).toBe(3);
   });
 
@@ -155,9 +155,9 @@ describe("syncEvents", () => {
     const { writer, docs } = fakeWriter();
     await syncEvents(await mapped(), writer);
     const photos = [{ _type: "image", _key: "a", asset: { _type: "reference", _ref: "image-abc-10x10-png" } }];
-    Object.assign(docs.get("event.310000001")!, { notes: "Great turnout", extraPhotos: photos, _rev: "r1", seoNote: "mine" });
+    Object.assign(docs.get("event-310000001")!, { notes: "Great turnout", extraPhotos: photos, _rev: "r1", seoNote: "mine" });
     await syncEvents(await mapped((n) => (n[0].title = "Renamed")), writer);
-    const d = docs.get("event.310000001")!;
+    const d = docs.get("event-310000001")!;
     expect(d.title).toBe("Renamed");
     expect(d.notes).toBe("Great turnout");
     expect(d.extraPhotos).toEqual(photos);
@@ -189,7 +189,7 @@ describe("syncEvents", () => {
     const r = await syncEvents(await mapped((n) => (n[0].status = "CANCELLED")), writer);
     expect(r).toEqual({ created: 0, updated: 1, unchanged: 2 });
     expect(docs.size).toBe(3);
-    expect(docs.get("event.310000001")?.meetupStatus).toBe("cancelled");
+    expect(docs.get("event-310000001")?.meetupStatus).toBe("cancelled");
   });
 
   it("moves a rescheduled event's start in place", async () => {
@@ -197,17 +197,17 @@ describe("syncEvents", () => {
     await syncEvents(await mapped(), writer);
     await syncEvents(await mapped((n) => ((n[1].dateTime = "2026-11-13T19:00-05:00"), (n[1].endTime = "2026-11-13T21:00-05:00"))), writer);
     expect(docs.size).toBe(3);
-    expect(docs.get("event.310000002")).toMatchObject({ start: "2026-11-13T19:00:00-05:00", end: "2026-11-13T21:00:00-05:00" });
+    expect(docs.get("event-310000002")).toMatchObject({ start: "2026-11-13T19:00:00-05:00", end: "2026-11-13T21:00:00-05:00" });
   });
 
   it("updates a migrated event (same _id scheme) instead of duplicating it, keeping its slug and image", async () => {
     const image = { _type: "image", asset: { _type: "reference", _ref: "image-x-1x1-png" } };
     const { writer, docs } = fakeWriter([
-      { _id: "event.310000001", _type: "event", meetupId: "310000001", title: "Old title", slug: { _type: "slug", current: "october-social" }, start: "2026-10-29T18:00:00-04:00", image, meetupStatus: "active" },
+      { _id: "event-310000001", _type: "event", meetupId: "310000001", title: "Old title", slug: { _type: "slug", current: "october-social" }, start: "2026-10-29T18:00:00-04:00", image, meetupStatus: "active" },
     ]);
     const r = await syncEvents(await mapped(), writer);
     expect(r).toEqual({ created: 2, updated: 1, unchanged: 0 });
-    const d = docs.get("event.310000001")!;
+    const d = docs.get("event-310000001")!;
     expect(d.slug).toEqual({ _type: "slug", current: "october-social" });
     expect(d.image).toEqual(image);
     expect(d.title).toBe("Monthly Social at Happy Dog: October");
@@ -215,18 +215,18 @@ describe("syncEvents", () => {
 
   it("gives a new event a unique slug when the title's slug is taken", async () => {
     const { writer, docs } = fakeWriter([
-      { _id: "event.wp-1", _type: "event", title: "Online reading group", slug: { _type: "slug", current: "online-reading-group" }, start: "2026-01-01T10:00:00-05:00" },
+      { _id: "event-wp-1", _type: "event", title: "Online reading group", slug: { _type: "slug", current: "online-reading-group" }, start: "2026-01-01T10:00:00-05:00" },
     ]);
     await syncEvents(await mapped(), writer);
-    expect(docs.get("event.310000003")?.slug).toEqual({ _type: "slug", current: "online-reading-group-2" });
+    expect(docs.get("event-310000003")?.slug).toEqual({ _type: "slug", current: "online-reading-group-2" });
   });
 
   it("drops a venue and end time that Meetup no longer has", async () => {
     const { writer, docs } = fakeWriter();
     await syncEvents(await mapped(), writer);
     await syncEvents(await mapped((n) => ((n[0].venue = null), (n[0].endTime = null))), writer);
-    expect(docs.get("event.310000001")).not.toHaveProperty("venue");
-    expect(docs.get("event.310000001")).not.toHaveProperty("end");
+    expect(docs.get("event-310000001")).not.toHaveProperty("venue");
+    expect(docs.get("event-310000001")).not.toHaveProperty("end");
   });
 });
 
@@ -235,11 +235,11 @@ describe("syncEvents from the iCal feed", () => {
     const { writer, docs } = fakeWriter();
     await syncEvents(await mapped(), writer);
     const image = { _type: "image", asset: { _type: "reference", _ref: "image-x-1x1-png" } };
-    Object.assign(docs.get("event.310000001")!, { image });
+    Object.assign(docs.get("event-310000001")!, { image });
     const bare = (await mapped((n) => n.forEach((x) => ((x.venue = null), (x.endTime = null), (x.group = null))))).map((e) => ({ ...e }));
     const r = await syncEvents(bare, writer, { source: "ical" });
     expect(r).toEqual({ created: 0, updated: 0, unchanged: 3 });
-    const d = docs.get("event.310000001")!;
+    const d = docs.get("event-310000001")!;
     expect(d.venue).toBeDefined();
     expect(d.end).toBeDefined();
     expect(d.organizer).toBeDefined();
@@ -247,7 +247,7 @@ describe("syncEvents from the iCal feed", () => {
     expect(d.image).toEqual(image);
     // The same data from GraphQL does remove the venue and end.
     await syncEvents(bare, writer);
-    expect(docs.get("event.310000001")).not.toHaveProperty("venue");
+    expect(docs.get("event-310000001")).not.toHaveProperty("venue");
   });
 });
 

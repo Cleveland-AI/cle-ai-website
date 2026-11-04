@@ -1,4 +1,4 @@
-// The story world on the homepage and the story stage (page.story-test in the fixtures), in a real
+// The story world on the homepage and the story stage (page-story-test in the fixtures), in a real
 // browser: a port of tests/browser/story-checks.js, which walked every chapter and reported what the
 // stage did, plus the stacked fallbacks for reduced motion and no JavaScript.
 import { expect, test, type Page } from "@playwright/test";
