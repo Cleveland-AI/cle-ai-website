@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/event-meta",
+	"version": "1.0.0",
+	"title": "Event details",
+	"category": "theme",
+	"icon": "location",
+	"description": "Details for a Meetup event: status, date and time, venue with a map link, RSVP button (upcoming only), organizer and a link back to all events. Use on event pages and inside event query loops.",
+	"textdomain": "cle-ai",
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"attributes": {
+		"showStatus": {
+			"type": "boolean",
+			"default": false
+		},
+		"statusUpcoming": {
+			"type": "string",
+			"default": "Upcoming"
+		},
+		"statusPast": {
+			"type": "string",
+			"default": "Past"
+		},
+		"showDate": {
+			"type": "boolean",
+			"default": true
+		},
+		"dateStyle": {
+			"type": "string",
+			"enum": [
+				"short",
+				"long"
+			],
+			"default": "short"
+		},
+		"showVenue": {
+			"type": "boolean",
+			"default": true
+		},
+		"venueStyle": {
+			"type": "string",
+			"enum": [
+				"full",
+				"name"
+			],
+			"default": "full"
+		},
+		"showRsvp": {
+			"type": "boolean",
+			"default": true
+		},
+		"rsvpLabel": {
+			"type": "string",
+			"default": "RSVP on Meetup"
+		},
+		"showOrganizer": {
+			"type": "boolean",
+			"default": false
+		},
+		"organizerLabel": {
+			"type": "string",
+			"default": "Organized by"
+		},
+		"showBackLink": {
+			"type": "boolean",
+			"default": false
+		},
+		"backLabel": {
+			"type": "string",
+			"default": "← All events"
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

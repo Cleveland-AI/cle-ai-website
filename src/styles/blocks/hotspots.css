@@ -1,0 +1,104 @@
+/* Markers and popovers shared by cle/hotspot-scene and cle/story. The container gets .cle-hotspots. */
+.cle-hotspots {
+	--cle-pin: var(--wp--custom--scene--pin-small);
+	--cle-pop-w: min(var(--wp--custom--scene--popover-width), 72vw, 100%);
+}
+
+@media (min-width: 640px) {
+	.cle-hotspots {
+		--cle-pin: var(--wp--custom--scene--pin);
+	}
+}
+
+/* Markers are circles by design (the scene spec), and pulse gently until opened. */
+.cle-scene__pin {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	display: grid;
+	place-items: center;
+	box-sizing: border-box;
+	width: var(--cle-pin);
+	height: var(--cle-pin);
+	padding: 0;
+	transform: translate(-50%, -50%);
+	font: inherit;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 700;
+	color: var(--wp--preset--color--ink);
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 30%, var(--wp--preset--color--coral)), var(--wp--preset--color--coral) 60%);
+	border: 2px solid var(--wp--preset--color--white);
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--ball);
+	cursor: pointer;
+	animation: cle-scene-pulse 2.6s ease-out infinite;
+}
+
+.cle-scene__pin svg {
+	width: 62%;
+	height: 62%;
+}
+
+.cle-scene__pin[aria-expanded="true"] {
+	color: var(--wp--preset--color--surface);
+	background: var(--wp--preset--color--ink);
+	box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.25), 0 2px 0 rgba(0, 0, 0, 0.25), 0 5px 10px -5px rgba(0, 32, 80, 0.35);
+	animation: none;
+}
+
+/* Markers are clay balls; the idle pulse rings out around the ball's own shadow. */
+@keyframes cle-scene-pulse {
+	0% {
+		box-shadow: var(--wp--custom--clay--ball), 0 0 0 0 color-mix(in srgb, var(--wp--preset--color--coral) 55%, transparent);
+	}
+
+	70%,
+	100% {
+		box-shadow: var(--wp--custom--clay--ball), 0 0 0 var(--wp--preset--spacing--xs) transparent;
+	}
+}
+
+/* Popovers are siblings of the markers, clamped so they never overflow the container. */
+.cle-scene__pop {
+	position: absolute;
+	z-index: 2;
+	left: clamp(0px, calc(var(--x) - var(--cle-pop-w) / 2), calc(100% - var(--cle-pop-w)));
+	box-sizing: border-box;
+	width: var(--cle-pop-w);
+	padding: var(--wp--preset--spacing--s);
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--surface-raised);
+	border: 0;
+	border-radius: var(--wp--custom--radius);
+	box-shadow: var(--wp--custom--popover--shadow);
+}
+
+.cle-scene__pop[hidden] {
+	display: none;
+}
+
+.cle-scene__pop.is-below {
+	top: calc(var(--y) + var(--cle-pin) / 2 + var(--wp--preset--spacing--xxs));
+}
+
+.cle-scene__pop.is-above {
+	bottom: calc(100% - var(--y) + var(--cle-pin) / 2 + var(--wp--preset--spacing--xxs));
+}
+
+.cle-scene__pop h3 {
+	margin: 0 0 var(--wp--preset--spacing--xxxs);
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 700;
+	color: var(--wp--preset--color--ink);
+}
+
+.cle-scene__pop p {
+	margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-scene__pin {
+		animation: none;
+	}
+}

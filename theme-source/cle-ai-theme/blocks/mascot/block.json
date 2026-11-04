@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/mascot",
+	"version": "1.0.0",
+	"title": "Dot (mascot)",
+	"category": "theme",
+	"icon": "smiley",
+	"description": "Dot, the blue clay dot from the logo, in one of his poses: peeking (over the footer, in a winter hat from December to February), lost, asleep, on stage, at the social, at a workshop, hiking, searching, or welcoming. Poke him three times.",
+	"keywords": [
+		"dot",
+		"mascot",
+		"character"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"pose": {
+			"type": "string",
+			"enum": [
+				"peek",
+				"lost",
+				"sleep",
+				"stage",
+				"social",
+				"workshop",
+				"hike",
+				"search",
+				"welcome"
+			],
+			"default": "peek"
+		},
+		"width": {
+			"type": "number",
+			"default": 220
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"left",
+			"center",
+			"right"
+		],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [
+		"cle-confetti",
+		"file:./style.css"
+	],
+	"render": "file:./render.php"
+}

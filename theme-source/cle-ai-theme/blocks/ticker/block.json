@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/ticker",
+	"version": "1.0.0",
+	"title": "Ticker",
+	"category": "widgets",
+	"icon": "controls-forward",
+	"description": "A slow, pausable single-line scroll of recent posts and upcoming events.",
+	"textdomain": "cle-ai",
+	"attributes": {
+		"source": { "type": "string", "enum": [ "posts", "events", "both" ], "default": "posts" },
+		"count": { "type": "number", "default": 8 },
+		"showThumbnails": { "type": "boolean", "default": true },
+		"duration": { "type": "number", "default": 50 },
+		"label": { "type": "string", "default": "Latest" },
+		"eventPrefix": { "type": "string", "default": "Next:" },
+		"pauseLabel": { "type": "string", "default": "Pause" },
+		"playLabel": { "type": "string", "default": "Play" }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"color": { "background": true, "text": true, "link": true },
+		"spacing": { "padding": true, "margin": true },
+		"typography": { "fontSize": true }
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

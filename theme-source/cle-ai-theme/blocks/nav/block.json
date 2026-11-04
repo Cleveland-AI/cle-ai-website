@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/nav",
+	"version": "1.0.0",
+	"title": "Header navigation",
+	"category": "theme",
+	"icon": "menu-alt",
+	"description": "Holds the header menus and search. Inline on desktop; a full-screen overlay behind a menu button on phones.",
+	"textdomain": "cle-ai",
+	"attributes": {
+		"openLabel": { "type": "string", "default": "Menu" },
+		"closeLabel": { "type": "string", "default": "Close" }
+	},
+	"supports": {
+		"html": false,
+		"color": { "text": true, "link": true },
+		"spacing": { "blockGap": true },
+		"typography": { "fontSize": true }
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

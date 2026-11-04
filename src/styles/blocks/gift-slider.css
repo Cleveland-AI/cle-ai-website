@@ -1,0 +1,121 @@
+/* cle/gift-slider: a big amount, a pile of clay objects, what it covers, a clay slider. */
+.cle-gift__live {
+	display: grid;
+	gap: var(--wp--preset--spacing--s);
+	justify-items: center;
+	padding: var(--wp--preset--spacing--m);
+	text-align: center;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--surface-raised);
+	border-radius: var(--wp--custom--clay--card);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-gift__live[hidden],
+.cle-gift__list[hidden] {
+	display: none;
+}
+
+.cle-gift__amount {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--xxxl);
+	font-weight: 700;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+}
+
+.cle-gift__pile {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	min-height: 7.5rem;
+}
+
+.cle-gift__piece {
+	display: none;
+	width: 5.5rem;
+	height: 5.5rem;
+	margin: 0 -0.6rem;
+	object-fit: contain;
+}
+
+.cle-gift__piece.is-on {
+	display: block;
+	animation: cle-gift-pop 0.4s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+@keyframes cle-gift-pop {
+	0% { opacity: 0; transform: translateY(-30%) scale(0.9, 1.1); }
+	60% { opacity: 1; transform: translateY(0) scale(1.1, 0.9); }
+	100% { transform: none; }
+}
+
+.cle-gift .is-stand-in {
+	padding: 0.7rem;
+}
+
+.cle-gift__covers {
+	margin: 0;
+	min-height: 1.5em;
+	font-weight: 600;
+}
+
+/* The slider: a pressed-in track that fills sky blue up to a clay ball. */
+.cle-gift__range {
+	width: 100%;
+	max-width: 32rem;
+	height: 1.25rem;
+	margin: 0;
+	background: linear-gradient(90deg, var(--wp--preset--color--accent) var(--fill, 40%), var(--wp--preset--color--surface) var(--fill, 40%));
+	border-radius: var(--wp--custom--clay--pill);
+	box-shadow: var(--wp--custom--clay--pressed);
+	-webkit-appearance: none;
+	appearance: none;
+	cursor: pointer;
+}
+
+.cle-gift__range::-webkit-slider-thumb {
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 35%, var(--wp--preset--color--coral)), var(--wp--preset--color--coral) 62%);
+	box-shadow: var(--wp--custom--clay--ball);
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.cle-gift__range::-moz-range-thumb {
+	width: 2.25rem;
+	height: 2.25rem;
+	border: 0;
+	border-radius: 50%;
+	background: var(--wp--preset--color--coral);
+	box-shadow: var(--wp--custom--clay--ball);
+}
+
+.cle-gift__ticks {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 32rem;
+	font-size: var(--wp--preset--font-size--xs);
+	color: var(--wp--preset--color--ink-soft);
+	font-variant-numeric: tabular-nums;
+}
+
+.cle-gift__live p:last-child {
+	margin: 0;
+}
+
+.cle-gift__list {
+	display: grid;
+	gap: var(--wp--preset--spacing--xxs);
+	padding: 0;
+	list-style: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-gift__piece.is-on {
+		animation: none;
+	}
+}

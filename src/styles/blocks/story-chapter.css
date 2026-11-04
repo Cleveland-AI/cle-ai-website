@@ -1,0 +1,129 @@
+/* Stacked layout (also the no-JS / reduced-motion fallback): each chapter shows its own crop. */
+.cle-chapter {
+	padding-block: var(--wp--preset--spacing--xl);
+}
+
+.cle-chapter__body,
+.cle-chapter__icon {
+	display: block;
+	max-width: var(--wp--style--global--content-size);
+	margin-inline: auto;
+}
+
+.cle-chapter__icon {
+	margin-bottom: var(--wp--preset--spacing--s);
+	color: var(--wp--preset--color--ink);
+}
+
+.cle-chapter__icon svg {
+	width: var(--wp--preset--spacing--l);
+	height: var(--wp--preset--spacing--l);
+}
+
+.cle-chapter__crop {
+	max-width: var(--wp--style--global--wide-size);
+	margin: 0 auto var(--wp--preset--spacing--l);
+	aspect-ratio: 2000 / 1116;
+	overflow: hidden;
+}
+
+.cle-chapter__crop img {
+	display: block;
+	width: 100%;
+	height: auto;
+	transform: scale(max(1, var(--cam-z))) translate(calc(50% - var(--cam-x)), calc(50% - var(--cam-y)));
+}
+
+.is-night-chapter {
+	color: var(--wp--preset--color--paper);
+	background-color: var(--wp--preset--color--indigo);
+}
+
+.is-night-chapter :where(h1, h2, h3, h4, p, a) {
+	color: inherit;
+}
+
+.is-pattern-chapter {
+	position: relative;
+	isolation: isolate;
+}
+
+.is-pattern-chapter::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: var(--cle-pattern) 0 0 / 60rem auto;
+	opacity: 0.35;
+	pointer-events: none;
+}
+
+/* Editor preview: the full scene with a frame showing where the camera points. */
+.cle-chapter-editor__head {
+	display: flex;
+	gap: var(--wp--preset--spacing--xs);
+	align-items: center;
+	max-width: var(--wp--style--global--content-size);
+	margin: 0 auto var(--wp--preset--spacing--s);
+}
+
+.cle-chapter-editor__head .cle-chapter__icon {
+	margin: 0;
+}
+
+.cle-chapter-preview {
+	position: relative;
+	max-width: var(--wp--style--global--content-size);
+	margin: 0 auto var(--wp--preset--spacing--m);
+	overflow: hidden;
+	cursor: crosshair;
+}
+
+.cle-chapter-preview img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.cle-chapter-preview__view {
+	position: absolute;
+	left: calc(var(--cam-x) - 50% / var(--cam-z));
+	top: calc(var(--cam-y) - 50% / var(--cam-z));
+	width: calc(100% / var(--cam-z));
+	height: calc(100% / var(--cam-z));
+	border: 2px solid var(--wp--preset--color--accent);
+	pointer-events: none;
+}
+
+.cle-chapter-preview__dot {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	display: grid;
+	place-items: center;
+	width: var(--wp--preset--spacing--m);
+	height: var(--wp--preset--spacing--m);
+	transform: translate(-50%, -50%);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--ink);
+	border-radius: var(--wp--custom--radius);
+	pointer-events: none;
+}
+
+.cle-chapter-preview__dot.is-pin {
+	background: var(--wp--preset--color--accent);
+}
+
+.cle-chapter-preview__hint {
+	position: absolute;
+	left: var(--wp--preset--spacing--xxs);
+	bottom: var(--wp--preset--spacing--xxs);
+	padding: var(--wp--preset--spacing--xxxs) var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--xs);
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--ink);
+	border-radius: var(--wp--custom--radius);
+	pointer-events: none;
+}

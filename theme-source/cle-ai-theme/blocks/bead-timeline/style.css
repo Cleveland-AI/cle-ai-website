@@ -1,0 +1,115 @@
+/* cle/bead-timeline: clay beads strung on a cord, the open bead lifted and larger. */
+.cle-beads__cord {
+	position: relative;
+	display: flex;
+	gap: clamp(1rem, 4vw, 3rem);
+	margin: 0;
+	padding: var(--wp--preset--spacing--m) var(--wp--preset--spacing--s);
+	list-style: none;
+	overflow-x: auto;
+	scroll-snap-type: x proximity;
+	scrollbar-width: none;
+}
+
+.cle-beads__cord::-webkit-scrollbar {
+	display: none;
+}
+
+/* The cord: a soft navy string through the middle of the beads. */
+.cle-beads__cord::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(var(--wp--preset--spacing--m) + 2.25rem);
+	height: 4px;
+	background: var(--wp--preset--color--ink);
+	border-radius: 2px;
+	opacity: 0.8;
+}
+
+.cle-beads__cord li {
+	scroll-snap-align: center;
+}
+
+.cle-beads__bead {
+	position: relative;
+	display: grid;
+	justify-items: center;
+	gap: var(--wp--preset--spacing--xs);
+	padding: 0;
+	font: inherit;
+	color: var(--wp--preset--color--ink);
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+
+.cle-beads__ball {
+	width: 4.5rem;
+	height: 4.5rem;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 35%, var(--c)), var(--c) 62%);
+	box-shadow: inset 0 -3px 3px rgba(0, 0, 0, 0.16), inset 0 2px 2px rgba(255, 255, 255, 0.35), 0 6px 10px -6px rgba(0, 32, 80, 0.38);
+	transition: transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.cle-beads__bead:hover .cle-beads__ball {
+	transform: translateY(-3px) scale(1.05);
+}
+
+.cle-beads__bead[aria-expanded="true"] .cle-beads__ball {
+	transform: translateY(-6px) scale(1.18);
+}
+
+.cle-beads__year {
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.cle-beads__bead[aria-expanded="true"] .cle-beads__year {
+	color: var(--wp--preset--color--ink-blue);
+}
+
+.cle-beads__bead:focus-visible {
+	outline: none;
+}
+
+.cle-beads__bead:focus-visible .cle-beads__ball {
+	outline: 3px solid var(--wp--preset--color--ink);
+	outline-offset: 4px;
+}
+
+.cle-beads__story {
+	max-width: 60ch;
+	padding: var(--wp--preset--spacing--s) var(--wp--preset--spacing--m);
+	border-left: 6px solid var(--wp--preset--color--accent);
+}
+
+.cle-beads__story h3 {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+}
+
+.cle-beads__story p {
+	margin: 0;
+}
+
+.cle-beads__when {
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 600;
+	letter-spacing: var(--wp--custom--letter-spacing--eyebrow);
+	text-transform: uppercase;
+	color: var(--wp--preset--color--ink-blue);
+}
+
+/* Before the script runs, show every story; after, only the open one. */
+.cle-beads__stories {
+	display: grid;
+	gap: var(--wp--preset--spacing--s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-beads__ball {
+		transition: none;
+	}
+}

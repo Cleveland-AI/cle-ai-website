@@ -1,0 +1,134 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/timeline",
+	"version": "1.0.0",
+	"title": "History timeline",
+	"category": "widgets",
+	"icon": "clock",
+	"description": "Scroll-driven horizontal timeline of milestones and Meetup events, positioned by real date. A plain list under reduced motion.",
+	"textdomain": "cle-ai",
+	"attributes": {
+		"milestones": {
+			"type": "array",
+			"default": [
+				{
+					"date": "2010-03-01",
+					"label": "2010",
+					"title": "Cleveland Big Data begins",
+					"body": "Doug Meil starts a Hadoop user group, years before anyone had \"data engineer\" on a business card.",
+					"tag": "Origin",
+					"major": true,
+					"next": false
+				},
+				{
+					"date": "2016-08-01",
+					"label": "August 2016",
+					"title": "Writing down what works",
+					"body": "Doug publishes a guide to running a technical meetup that lasts, drawn from six years of doing it.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2017-06-01",
+					"label": "2017",
+					"title": "Cleveland AI forms",
+					"body": "A second group starts as machine learning moves out of research labs and into everyday software.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2024-11-01",
+					"label": "November 2024",
+					"title": "The two groups merge",
+					"body": "AI and data had stopped being separate conversations, so the meetups stopped being separate too.",
+					"tag": "Merger",
+					"major": true,
+					"next": false
+				},
+				{
+					"date": "2025-07-14",
+					"label": "July 2025",
+					"title": "Hosted at KeyBank",
+					"body": "Sixty-three people turn out for talks from Endstation, Shopify and GenomOncology.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2025-09-08",
+					"label": "September 2025",
+					"title": "First Mega Meetup",
+					"body": "The community takes over the Cleveland Museum of Natural History for the biggest night of the year.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2026-07-13",
+					"label": "July 2026",
+					"title": "Summer in the Flats",
+					"body": "Hosted by Further. FinOps for agentic AI, self-hosted infrastructure, and hard lessons from Watson Health.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2026-08-22",
+					"label": "August 2026",
+					"title": "A hike, not a talk",
+					"body": "Twenty-eight members walk the North Chagrin bridle trail. Not everything happens in a conference room.",
+					"tag": "",
+					"major": false,
+					"next": false
+				},
+				{
+					"date": "2026-09-28",
+					"label": "September 28, 2026",
+					"title": "Mega Meetup at the Museum",
+					"body": "Five talks from AWS, Nutanix, Arista Networks, Further and OpenAI.",
+					"tag": "Next up",
+					"major": true,
+					"next": true
+				}
+			]
+		},
+		"includeEvents": {
+			"type": "boolean",
+			"default": true
+		},
+		"startYear": {
+			"type": "number",
+			"default": 2010
+		},
+		"eventLabel": {
+			"type": "string",
+			"default": "Meetup"
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

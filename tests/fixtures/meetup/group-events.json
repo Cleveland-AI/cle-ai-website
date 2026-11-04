@@ -1,0 +1,55 @@
+{
+  "data": {
+    "groupByUrlname": {
+      "name": "CLE AI & DATA",
+      "urlname": "cleveland-ai-data",
+      "events": {
+        "pageInfo": { "hasNextPage": false, "endCursor": "Mw" },
+        "edges": [
+          {
+            "node": {
+              "id": "310000001",
+              "title": "Monthly Social at Happy Dog: October",
+              "description": "Come meet people working with AI and data.\n\nHot dogs and talk, no slides.",
+              "dateTime": "2026-10-29T18:00-04:00",
+              "endTime": "2026-10-29T20:00-04:00",
+              "eventUrl": "https://www.meetup.com/cleveland-ai-data/events/310000001/",
+              "status": "ACTIVE",
+              "venue": { "name": "Happy Dog", "address": "5801 Detroit Avenue", "city": "Cleveland", "state": "OH", "postalCode": "44102", "lat": 41.4849, "lng": -81.7294 },
+              "featuredEventPhoto": { "id": "1", "highResUrl": "https://secure.meetupstatic.com/photos/event/1/highres_1.jpeg" },
+              "group": { "name": "CLE AI & DATA", "urlname": "cleveland-ai-data" }
+            }
+          },
+          {
+            "node": {
+              "id": "310000002",
+              "title": "Monthly Social at Happy Dog: November",
+              "description": "<p>After the clocks change.</p>",
+              "dateTime": "2026-11-12T18:00-05:00",
+              "endTime": "2026-11-12T20:00-05:00",
+              "eventUrl": "https://www.meetup.com/cleveland-ai-data/events/310000002/",
+              "status": "ACTIVE",
+              "venue": { "name": "Happy Dog", "address": "5801 Detroit Avenue", "city": "Cleveland", "state": "OH", "postalCode": "44102", "lat": 41.4849, "lng": -81.7294 },
+              "featuredEventPhoto": null,
+              "group": { "name": "CLE AI & DATA", "urlname": "cleveland-ai-data" }
+            }
+          },
+          {
+            "node": {
+              "id": "310000003",
+              "title": "Online reading group",
+              "description": "Remote session.",
+              "dateTime": "2026-11-18T19:00-05:00",
+              "endTime": null,
+              "eventUrl": "https://www.meetup.com/cleveland-ai-data/events/310000003/",
+              "status": "ACTIVE",
+              "venue": null,
+              "featuredEventPhoto": null,
+              "group": { "name": "CLE AI & DATA", "urlname": "cleveland-ai-data" }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/gift-slider",
+	"version": "1.0.0",
+	"title": "What your gift covers",
+	"category": "widgets",
+	"icon": "money-alt",
+	"description": "A slider of gift amounts; each step shows what that amount pays for, as clay objects piling up.",
+	"keywords": [ "donate", "gift", "impact", "slider" ],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"steps": {
+			"type": "array",
+			"default": [
+				{ "amount": 25, "label": "Name tags and markers for a night", "art": "gift-name-tags" },
+				{ "amount": 55, "label": "Coffee for a morning workshop", "art": "gift-coffee" },
+				{ "amount": 100, "label": "Pizza for a monthly social", "art": "perk-pizza" },
+				{ "amount": 250, "label": "Chairs and setup for a workshop", "art": "gift-chairs" },
+				{ "amount": 500, "label": "Projector and sound for a talk night", "art": "perk-screen" },
+				{ "amount": 1000, "label": "The room for a big night", "art": "perk-door" }
+			]
+		},
+		"start": { "type": "number", "default": 2 },
+		"target": { "type": "string", "default": "#donate" },
+		"buttonLabel": { "type": "string", "default": "Give %s" }
+	},
+	"supports": { "html": false, "spacing": { "margin": true } },
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/venue-map",
+	"version": "1.0.0",
+	"title": "Where we meet",
+	"category": "widgets",
+	"icon": "location",
+	"description": "A clay map of Greater Cleveland with a pin per venue; each pin shows the next event there. A plain list shows the same, and stands in until the map image exists.",
+	"keywords": [
+		"map",
+		"venues",
+		"events",
+		"where"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"art": {
+			"type": "string",
+			"default": "venue-map"
+		},
+		"alt": {
+			"type": "string",
+			"default": "Clay map of Greater Cleveland with our regular venues marked."
+		},
+		"pins": {
+			"type": "array",
+			"default": [
+				{
+					"title": "Happy Dog",
+					"place": "5801 Detroit Avenue, Gordon Square. Monthly socials.",
+					"match": "Social",
+					"x": 25,
+					"y": 41
+				},
+				{
+					"title": "Cleveland Museum of Natural History",
+					"place": "1 Wade Oval Drive, University Circle. Big nights.",
+					"match": "Mega",
+					"x": 87,
+					"y": 38
+				},
+				{
+					"title": "On the trail",
+					"place": "Hikes in the Cuyahoga Valley and the Metroparks.",
+					"match": "Hike",
+					"x": 51,
+					"y": 79
+				}
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide"
+		],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [
+		"cle-hotspots",
+		"file:./style.css"
+	],
+	"render": "file:./render.php"
+}

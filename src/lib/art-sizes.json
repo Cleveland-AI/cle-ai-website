@@ -1,0 +1,220 @@
+{
+  "illustrations": {
+    "corporate-partners": [
+      960,
+      487
+    ],
+    "dot-hike": [
+      720,
+      517
+    ],
+    "dot-lost": [
+      720,
+      621
+    ],
+    "dot-peek-winter": [
+      720,
+      625
+    ],
+    "dot-peek": [
+      720,
+      377
+    ],
+    "dot-search": [
+      720,
+      602
+    ],
+    "dot-sleep": [
+      720,
+      626
+    ],
+    "dot-social": [
+      720,
+      720
+    ],
+    "dot-stage": [
+      720,
+      640
+    ],
+    "dot-tiny": [
+      481,
+      720
+    ],
+    "dot-walker-wave": [
+      360,
+      309
+    ],
+    "dot-walker": [
+      339,
+      360
+    ],
+    "dot-welcome": [
+      720,
+      671
+    ],
+    "dot-workshop": [
+      720,
+      542
+    ],
+    "east-side-taproom": [
+      1672,
+      941
+    ],
+    "gift-chairs": [
+      720,
+      663
+    ],
+    "gift-coffee": [
+      720,
+      605
+    ],
+    "gift-name-tags": [
+      720,
+      583
+    ],
+    "job-board": [
+      720,
+      514
+    ],
+    "mailbox": [
+      497,
+      720
+    ],
+    "merger-beads": [
+      1672,
+      941
+    ],
+    "microphone": [
+      487,
+      720
+    ],
+    "night-after": [
+      1100,
+      978
+    ],
+    "night-arrive": [
+      920,
+      1100
+    ],
+    "night-dog": [
+      1100,
+      863
+    ],
+    "night-home": [
+      1026,
+      1100
+    ],
+    "night-talk": [
+      1100,
+      828
+    ],
+    "perk-door": [
+      655,
+      720
+    ],
+    "perk-pizza": [
+      720,
+      678
+    ],
+    "perk-screen": [
+      720,
+      687
+    ],
+    "perk-table": [
+      720,
+      696
+    ],
+    "signpost": [
+      592,
+      720
+    ],
+    "sprout": [
+      495,
+      720
+    ],
+    "venue-map": [
+      1536,
+      1024
+    ]
+  },
+  "shapes": {
+    "blue": [
+      475,
+      395
+    ],
+    "coral": [
+      425,
+      387
+    ],
+    "green": [
+      458,
+      376
+    ],
+    "navy": [
+      395,
+      378
+    ],
+    "pale": [
+      464,
+      351
+    ],
+    "yellow": [
+      410,
+      389
+    ]
+  },
+  "story": {
+    "bar-staff": [
+      2000,
+      1116
+    ],
+    "composite": [
+      2000,
+      1116
+    ],
+    "counter": [
+      2000,
+      1116
+    ],
+    "hotdog-beer": [
+      721,
+      590
+    ],
+    "lights": [
+      2000,
+      1116
+    ],
+    "neon": [
+      2000,
+      1116
+    ],
+    "pattern": [
+      2000,
+      1091
+    ],
+    "room": [
+      2000,
+      1116
+    ],
+    "table-1": [
+      2000,
+      1116
+    ],
+    "table-2": [
+      2000,
+      1116
+    ],
+    "table-3": [
+      2000,
+      1116
+    ],
+    "table-4": [
+      2000,
+      1116
+    ],
+    "world": [
+      1672,
+      941
+    ]
+  }
+}

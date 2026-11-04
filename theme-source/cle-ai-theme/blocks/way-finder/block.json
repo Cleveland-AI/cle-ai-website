@@ -1,0 +1,46 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/way-finder",
+	"version": "1.0.0",
+	"title": "Find your way in",
+	"category": "widgets",
+	"icon": "location-alt",
+	"description": "Three quick questions that point a newcomer to the best way to get involved, then take them there.",
+	"keywords": [
+		"quiz",
+		"get involved",
+		"newcomer"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": "Not sure where to start?"
+		},
+		"intro": {
+			"type": "string",
+			"default": "Three taps and we'll point you the right way."
+		},
+		"art": {
+			"type": "string",
+			"default": "signpost"
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide"
+		],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [
+		"cle-confetti",
+		"file:./style.css"
+	],
+	"render": "file:./render.php"
+}

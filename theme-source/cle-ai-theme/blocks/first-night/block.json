@@ -1,0 +1,89 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/first-night",
+	"version": "1.0.0",
+	"title": "Your first night",
+	"category": "theme",
+	"icon": "clock",
+	"description": "What a social is actually like, told in five moments that change as you scroll. Ends on the next social. Can be hidden from the site without removing it (\"Show on the site\" in the sidebar).",
+	"keywords": [
+		"story",
+		"scroll",
+		"social",
+		"first time"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"visible": {
+			"type": "boolean",
+			"default": true
+		},
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": "Your first night"
+		},
+		"heading": {
+			"type": "string",
+			"default": "What a social is actually like."
+		},
+		"match": {
+			"type": "string",
+			"default": "Social"
+		},
+		"steps": {
+			"type": "array",
+			"default": [
+				{
+					"time": "6:00 PM",
+					"title": "You arrive",
+					"text": "Happy Dog, 5801 Detroit Avenue in Gordon Square. Parking is free. Look for the table with the laptops and the name tags.",
+					"art": "night-arrive",
+					"fallback": "dot-welcome"
+				},
+				{
+					"time": "6:10",
+					"title": "You grab a dog",
+					"text": "Fifty-odd toppings, your call. Food and drinks are on you; nothing else costs a thing.",
+					"art": "night-dog",
+					"fallback": "dot-social"
+				},
+				{
+					"time": "6:30",
+					"title": "You talk",
+					"text": "No slides. Someone asks what you're curious about, and that is the evening. Beginners and people who build this for a living share a table.",
+					"art": "night-talk",
+					"fallback": "dot-stage"
+				},
+				{
+					"time": "7:30",
+					"title": "The hour after",
+					"text": "The part people come back for: the introductions, the “you should talk to…”, the project that could use a hand.",
+					"art": "night-after",
+					"fallback": "dot-workshop"
+				},
+				{
+					"time": "8:00",
+					"title": "You head home",
+					"text": "Three new names in your phone and a reason to come back next month.",
+					"art": "night-home",
+					"fallback": "dot-hike"
+				}
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"full"
+		]
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

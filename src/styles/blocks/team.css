@@ -1,0 +1,448 @@
+/* cle/team: shape headshots that squish like the logo on hover; tapping one opens their card. */
+.cle-team-cards {
+	--cols: 2;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center; /* a last row that isn't full sits in the middle, not at the left */
+	gap: var(--wp--preset--spacing--l) var(--wp--preset--spacing--m);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cle-team-cards > li {
+	flex: 0 0 calc((100% - (var(--cols) - 1) * var(--wp--preset--spacing--m)) / var(--cols));
+	min-width: 0;
+}
+
+/* Three across on desktop, two on phones. */
+@media (min-width: 782px) {
+	.cle-team-cards {
+		--cols: 3;
+	}
+}
+
+.cle-team-card {
+	display: grid;
+	justify-items: center;
+	align-content: start;
+	text-align: center;
+}
+
+.cle-team-card p {
+	margin: 0;
+}
+
+.cle-team-card__photo {
+	display: block;
+	width: 100%;
+	max-width: 15rem;
+	height: auto;
+	margin: 0 auto var(--wp--preset--spacing--xs);
+	transform-origin: 50% 100%;
+}
+
+.cle-team-card:hover .cle-team-card__photo,
+.cle-team-card__open:focus-visible .cle-team-card__photo {
+	animation: cle-team-squish 0.6s ease-out;
+}
+
+@keyframes cle-team-squish {
+	0%, 100% { transform: none; }
+	30% { transform: scale(1.06, 0.94); }
+	55% { transform: scale(0.97, 1.04); }
+	78% { transform: scale(1.02, 0.99); }
+}
+
+/* Before a headshot exists: initials on a soft clay blob the size of a photo. */
+.cle-team-card__initials {
+	display: grid;
+	place-items: center;
+	aspect-ratio: 640 / 700;
+	background: radial-gradient(circle at 50% 55%, var(--c) 0 58%, transparent 59%);
+}
+
+.cle-team-card__initials > span {
+	display: grid;
+	place-items: center;
+	width: 62%;
+	aspect-ratio: 1;
+	font-size: clamp(1.8rem, 5vw, 3rem);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	color: var(--wp--preset--color--ink);
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--ball);
+	background: var(--c);
+}
+
+.cle-team-modal__photo .cle-team-card__initials {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+}
+
+/* The photo and name are one big button for people with a card. */
+.cle-team-card__open {
+	display: grid;
+	justify-items: center;
+	width: 100%;
+	padding: 0;
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+
+.cle-team-card__open:focus-visible {
+	outline: none;
+}
+
+.cle-team-card__open:focus-visible .cle-team-card__name {
+	outline: 2px solid var(--wp--preset--color--ink);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.cle-team-card__name {
+	font-weight: 700;
+}
+
+/* A small clay "+" on the photo says there's more to see. */
+.cle-team-card.has-card .cle-team-card__name::after {
+	content: "+";
+	display: inline-grid;
+	place-items: center;
+	width: 1.3em;
+	height: 1.3em;
+	margin-left: 0.35em;
+	font-size: 0.9em;
+	line-height: 1;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--accent);
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--soft);
+	vertical-align: 0.05em;
+	transition: transform 0.3s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.cle-team-card__open:hover .cle-team-card__name::after {
+	transform: rotate(90deg) scale(1.15);
+}
+
+.cle-team-card__role {
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+}
+
+/* LinkedIn on the card: a small round clay button with the "in" mark, under the role. */
+.cle-team-card__in {
+	order: 5;
+	display: grid;
+	place-items: center;
+	width: 2.1rem;
+	height: 2.1rem;
+	margin-top: var(--wp--preset--spacing--xs);
+	color: var(--wp--preset--color--white);
+	background: #0a66c2; /* LinkedIn blue, so the mark reads at a glance */
+	border-radius: 50%;
+	box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.3), inset 0 -2px 2px rgba(0, 0, 0, 0.18), 0 2px 0 #074a8d, 0 5px 10px -5px rgba(0, 32, 80, 0.35);
+	transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.cle-team-card__in:hover {
+	transform: translateY(-2px) rotate(-6deg);
+}
+
+.cle-team-card__in:active {
+	transform: translateY(1px);
+	box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.25), 0 1px 0 #074a8d;
+}
+
+.cle-in {
+	width: 1.05rem;
+	height: 1.05rem;
+}
+
+.cle-team-modal__link .cle-in {
+	width: 1em;
+	height: 1em;
+}
+
+.cle-team-card__lead {
+	order: 4;
+}
+
+.cle-team-card__lead,
+.cle-team-modal__lead {
+	margin-top: var(--wp--preset--spacing--xxs) !important;
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 600;
+	letter-spacing: var(--wp--custom--letter-spacing--eyebrow);
+	text-transform: uppercase;
+	color: var(--wp--preset--color--ink-blue);
+}
+
+/* ---------- The modal ---------- */
+.cle-team-modal {
+	width: min(40rem, calc(100vw - 2 * var(--wp--preset--spacing--s)));
+	max-height: calc(100dvh - 2 * var(--wp--preset--spacing--s));
+	padding: 0;
+	overflow: visible;
+	color: var(--wp--preset--color--ink);
+	background: none;
+	border: 0;
+}
+
+.cle-team-modal::backdrop {
+	background: color-mix(in srgb, var(--wp--preset--color--indigo) 45%, transparent);
+	backdrop-filter: blur(3px);
+}
+
+html.cle-modal-open {
+	overflow: hidden;
+}
+
+.cle-team-modal__card {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+	gap: var(--wp--preset--spacing--m);
+	align-items: center;
+	max-height: inherit;
+	overflow: auto;
+	padding: var(--wp--preset--spacing--m);
+	text-align: left;
+	background: var(--wp--preset--color--surface-raised);
+	border-radius: calc(var(--wp--custom--clay--card) * 1.25);
+	box-shadow: var(--wp--custom--clay--raised), 0 24px 48px -24px rgba(0, 32, 80, 0.45);
+}
+
+@media (max-width: 560px) {
+	.cle-team-modal__card {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		text-align: center;
+	}
+
+	.cle-team-modal__photo {
+		max-width: 11rem;
+	}
+
+	.cle-team-modal__links {
+		justify-content: center;
+	}
+}
+
+.cle-team-modal__photo {
+	width: 100%;
+	transform-origin: 50% 100%;
+}
+
+.cle-team-modal__photo img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.cle-team-modal__body {
+	display: grid;
+	gap: var(--wp--preset--spacing--xs);
+	justify-items: start;
+}
+
+@media (max-width: 560px) {
+	.cle-team-modal__body {
+		justify-items: center;
+	}
+}
+
+.cle-team-modal__body > * {
+	margin: 0 !important;
+}
+
+.cle-team-modal__name {
+	font-size: var(--wp--preset--font-size--xl);
+}
+
+/* The name takes focus when the card opens (for screen readers); no ring for that. */
+.cle-team-modal__name:focus {
+	outline: none;
+}
+
+.cle-team-modal__role {
+	font-weight: 600;
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-team-modal__bio {
+	line-height: 1.55;
+}
+
+.cle-team-modal__links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--xs);
+}
+
+.cle-team-modal__link,
+.cle-team-modal__next {
+	display: inline-flex;
+	gap: 0.35em;
+	align-items: center;
+	padding: 0.45em 1.1em;
+	font: inherit;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 700;
+	text-decoration: none;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--accent);
+	border: 0;
+	border-radius: var(--wp--custom--clay--pill);
+	box-shadow: var(--wp--custom--clay--button);
+	cursor: pointer;
+	transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.cle-team-modal__link:not(.is-linkedin) {
+	background: var(--wp--preset--color--yellow);
+	box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.35), inset 0 -3px 2px rgba(0, 0, 0, 0.1), 0 3px 0 color-mix(in srgb, var(--wp--preset--color--yellow) 70%, var(--wp--preset--color--ink)), 0 6px 12px -6px rgba(0, 32, 80, 0.32);
+}
+
+.cle-team-modal__link:hover,
+.cle-team-modal__next:hover {
+	transform: translateY(-1px);
+}
+
+.cle-team-modal__link:active,
+.cle-team-modal__next:active {
+	transform: translateY(2px);
+	box-shadow: var(--wp--custom--clay--button-pressed);
+}
+
+.cle-team-modal__arrow {
+	width: 0.9em;
+	height: 0.9em;
+}
+
+.cle-team-modal__next {
+	margin-top: var(--wp--preset--spacing--xs) !important;
+	background: var(--wp--preset--color--surface);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-team-modal__close {
+	position: absolute;
+	top: var(--wp--preset--spacing--xs);
+	right: var(--wp--preset--spacing--xs);
+	z-index: 1;
+	display: grid;
+	place-items: center;
+	width: 2.4rem;
+	height: 2.4rem;
+	padding: 0;
+	font-size: 1.5rem;
+	line-height: 1;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--surface);
+	border: 0;
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--raised);
+	cursor: pointer;
+	transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.cle-team-modal__close:hover {
+	transform: rotate(90deg);
+}
+
+.cle-team-modal__close:active {
+	box-shadow: var(--wp--custom--clay--pressed);
+}
+
+/* The fun part: the card springs out of the tapped photo, the headshot lands with a squish,
+   and the details pop in one after another. */
+@media (prefers-reduced-motion: no-preference) {
+	.cle-team-modal[open] .cle-team-modal__card {
+		animation: cle-modal-spring 0.55s cubic-bezier(0.3, 1.35, 0.5, 1) both;
+	}
+
+	.cle-team-modal[open]::backdrop {
+		animation: cle-modal-fade 0.3s ease-out both;
+	}
+
+	.cle-team-modal[open] .cle-team-modal__photo {
+		animation: cle-modal-land 0.7s 0.15s cubic-bezier(0.3, 1.2, 0.5, 1) both;
+	}
+
+	.cle-team-modal[open] .cle-team-modal__body > * {
+		animation: cle-modal-pop 0.4s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+	}
+
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(2) { animation-delay: 0.2s; }
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(3) { animation-delay: 0.26s; }
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(4) { animation-delay: 0.32s; }
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(5) { animation-delay: 0.38s; }
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(6) { animation-delay: 0.44s; }
+	.cle-team-modal[open] .cle-team-modal__body > :nth-child(7) { animation-delay: 0.5s; }
+
+	.cle-team-modal[open] .cle-team-modal__body > :first-child {
+		animation-delay: 0.14s;
+	}
+}
+
+@keyframes cle-modal-spring {
+	from {
+		opacity: 0;
+		transform: translate(var(--from-x, 0px), var(--from-y, 40px)) scale(0.25) rotate(-6deg);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes cle-modal-fade {
+	from { opacity: 0; }
+}
+
+@keyframes cle-modal-land {
+	0% { opacity: 0; transform: translateY(-40px) scale(0.9); }
+	45% { opacity: 1; transform: translateY(0) scale(1.08, 0.9); }
+	70% { transform: scale(0.96, 1.05); }
+	100% { transform: none; }
+}
+
+@keyframes cle-modal-pop {
+	from { opacity: 0; transform: translateY(10px) scale(0.96); }
+	to { opacity: 1; transform: none; }
+}
+
+/* Without JavaScript there's no modal: the card's contents sit under the photo. */
+html:not(.cle-js) .cle-team-modal {
+	position: static;
+	display: block;
+	width: 100%;
+	margin-top: var(--wp--preset--spacing--xs);
+}
+
+html:not(.cle-js) .cle-team-modal__photo,
+html:not(.cle-js) .cle-team-modal__close,
+html:not(.cle-js) .cle-team-modal__next,
+html:not(.cle-js) .cle-team-modal__lead,
+html:not(.cle-js) .cle-team-modal__name,
+html:not(.cle-js) .cle-team-modal__role {
+	display: none;
+}
+
+html:not(.cle-js) .cle-team-modal__card {
+	grid-template-columns: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-team-card:hover .cle-team-card__photo,
+	.cle-team-card__open:focus-visible .cle-team-card__photo {
+		animation: none;
+	}
+}

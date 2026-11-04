@@ -1,0 +1,101 @@
+/* Stacked layout (also the no-JS / reduced-motion fallback): each chapter shows its own crop. */
+.cle-wchapter {
+	padding-block: var(--wp--preset--spacing--xl);
+}
+
+.cle-wchapter__body {
+	max-width: var(--wp--style--global--content-size);
+	margin-inline: auto;
+}
+
+.cle-wchapter__crop {
+	max-width: var(--wp--style--global--wide-size);
+	margin: 0 auto var(--wp--preset--spacing--l);
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+}
+
+.cle-wchapter__crop img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transform: scale(var(--cam-z)) translate(calc(50% - var(--cam-x)), calc(50% - var(--cam-y)));
+}
+
+/* Editor preview: the whole picture with a frame showing where the camera points. */
+.cle-wchapter-preview {
+	position: relative;
+	max-width: var(--wp--style--global--content-size);
+	margin: 0 auto var(--wp--preset--spacing--m);
+	cursor: crosshair;
+}
+
+.cle-wchapter-preview img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.cle-wchapter-preview__view {
+	position: absolute;
+	left: calc(var(--cam-x) - 50% / var(--cam-z));
+	top: calc(var(--cam-y) - 50% / var(--cam-z));
+	width: calc(100% / var(--cam-z));
+	height: calc(100% / var(--cam-z));
+	border: 2px solid var(--wp--preset--color--accent);
+	pointer-events: none;
+}
+
+.cle-wchapter-preview__dot {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	display: grid;
+	place-items: center;
+	width: var(--wp--preset--spacing--m);
+	height: var(--wp--preset--spacing--m);
+	transform: translate(-50%, -50%);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--coral);
+	border-radius: 50%;
+	pointer-events: none;
+}
+
+.cle-wchapter-preview__cut {
+	position: absolute;
+	inset: var(--cut) 0 0;
+	background: color-mix(in srgb, var(--wp--preset--color--surface) 70%, transparent);
+	border-top: 2px dashed var(--wp--preset--color--accent);
+	pointer-events: none;
+}
+
+.cle-wchapter-preview__tag {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	padding: var(--wp--preset--spacing--xxxs) var(--wp--preset--spacing--xs);
+	transform: translate(-50%, -50%);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	white-space: nowrap;
+	color: var(--wp--preset--color--indigo);
+	background: var(--wp--preset--color--white);
+	border: 1px solid var(--wp--preset--color--accent);
+	border-radius: 999px;
+	pointer-events: none;
+}
+
+.cle-wchapter-preview__hint {
+	position: absolute;
+	left: var(--wp--preset--spacing--xxs);
+	bottom: var(--wp--preset--spacing--xxs);
+	padding: var(--wp--preset--spacing--xxxs) var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--xs);
+	color: var(--wp--preset--color--white);
+	background: var(--wp--preset--color--ink);
+	border-radius: var(--wp--custom--radius);
+	pointer-events: none;
+}

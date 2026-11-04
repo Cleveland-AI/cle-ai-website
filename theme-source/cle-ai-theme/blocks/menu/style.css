@@ -1,0 +1,23 @@
+.cle-menu__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--xxs) var(--wp--preset--spacing--m);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.wp-block-cle-menu a {
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.wp-block-cle-menu a:hover,
+.wp-block-cle-menu .current-menu-item > a {
+	text-decoration: underline;
+	text-decoration-color: var(--wp--preset--color--accent);
+}
+
+.cle-menu--social a {
+	font-weight: 400;
+}

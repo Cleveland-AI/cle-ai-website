@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/world-chapter",
+	"version": "1.0.0",
+	"title": "World chapter",
+	"category": "theme",
+	"icon": "media-document",
+	"parent": [
+		"cle/world"
+	],
+	"description": "One beat of the story. Sets where the camera looks while it is on screen, any tap-able markers there, and its tag in the finale.",
+	"textdomain": "cle-ai",
+	"usesContext": [
+		"cle/worldImageId"
+	],
+	"attributes": {
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"camera": {
+			"type": "object",
+			"default": {
+				"x": 50,
+				"y": 50,
+				"zoom": 1
+			}
+		},
+		"fadeBelow": {
+			"type": "number",
+			"default": 0
+		},
+		"hotspots": {
+			"type": "array",
+			"default": []
+		},
+		"tag": {
+			"type": "object"
+		},
+		"tagPhone": {
+			"type": "object"
+		},
+		"tagShort": {
+			"type": "string",
+			"default": ""
+		},
+		"stop": {
+			"type": "object"
+		}
+	},
+	"supports": {
+		"html": false,
+		"spacing": {
+			"padding": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

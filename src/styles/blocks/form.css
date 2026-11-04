@@ -1,0 +1,116 @@
+/* cle/form: the pitch and sponsor inquiry forms. Inputs, selects and the clay button come from theme.css. */
+.cle-form {
+	max-width: var(--wp--style--global--content-size, 720px);
+	margin-inline: auto;
+	padding: var(--wp--preset--spacing--m);
+	background: var(--wp--preset--color--surface-raised);
+	/* The card is light even inside a navy band (sponsors' "Start a conversation"), so its text is ink,
+	   not the band's paper colour (Task 17: labels were white on white there). */
+	color: var(--wp--preset--color--ink);
+	border-radius: var(--wp--custom--radius);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-form__form {
+	display: grid;
+	gap: var(--wp--preset--spacing--s);
+}
+
+.cle-form__field {
+	display: grid;
+	gap: var(--wp--preset--spacing--xxs);
+}
+
+.cle-form__field label {
+	font-weight: 600;
+}
+
+.cle-form__field :where(input, textarea, select) {
+	width: 100%;
+	box-sizing: border-box;
+	background: var(--wp--preset--color--surface);
+}
+
+.cle-form__field :where(input, textarea, select)[aria-invalid="true"] {
+	border-color: var(--wp--preset--color--coral);
+}
+
+.cle-form__hint {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-form__field-error {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 600;
+	padding-left: var(--wp--preset--spacing--xs);
+	border-left: 4px solid var(--wp--preset--color--coral);
+}
+
+/* The honeypot sits off-screen rather than display:none, so bots still fill it. */
+.cle-form__trap {
+	position: absolute;
+	left: -10000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.cle-form__package {
+	padding: var(--wp--preset--spacing--s);
+	background: var(--wp--preset--color--pale-blue);
+	border-radius: var(--wp--custom--radius);
+}
+
+.cle-form__package :where(p, ul) {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+}
+
+.cle-form__linkbutton {
+	padding: 0;
+	font: inherit;
+	font-size: var(--wp--preset--font-size--s);
+	color: inherit;
+	background: none;
+	border: 0;
+	text-decoration: underline;
+	text-decoration-color: var(--wp--preset--color--accent);
+	text-decoration-thickness: 2px;
+	cursor: pointer;
+}
+
+.cle-form__status:empty {
+	display: none;
+}
+
+.cle-form__status {
+	margin-bottom: var(--wp--preset--spacing--s);
+	font-weight: 600;
+}
+
+.cle-form__status:focus {
+	outline: none;
+}
+
+.cle-form__problem {
+	margin: 0;
+	padding-left: var(--wp--preset--spacing--xs);
+	border-left: 4px solid var(--wp--preset--color--coral);
+}
+
+.cle-form__thanks {
+	margin: 0;
+	padding-left: var(--wp--preset--spacing--xs);
+	border-left: 4px solid var(--wp--preset--color--green);
+}
+
+.cle-form__submit button:disabled {
+	opacity: 0.6;
+	cursor: progress;
+}
+
+.cle-form__turnstile {
+	min-height: 65px;
+}

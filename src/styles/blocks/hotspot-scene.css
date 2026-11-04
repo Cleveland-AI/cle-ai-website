@@ -1,0 +1,57 @@
+.cle-scene__intro,
+.cle-scene__actions,
+.cle-scene__list {
+	max-width: var(--wp--style--global--content-size);
+	margin-inline: auto;
+}
+
+.cle-scene__intro > * {
+	margin-block: 0 var(--wp--preset--spacing--s);
+}
+
+.cle-scene__frame {
+	position: relative;
+	margin: var(--wp--preset--spacing--l) 0 0;
+	overflow: hidden;
+	border-radius: var(--wp--custom--clay--card);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-scene__img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* Small screens: markers become small touch targets, so repeat the notes as a list. */
+.cle-scene__list {
+	margin-top: var(--wp--preset--spacing--m);
+	padding-left: var(--wp--preset--spacing--m);
+	font-size: var(--wp--preset--font-size--s);
+}
+
+.cle-scene__list li + li {
+	margin-top: var(--wp--preset--spacing--xxs);
+}
+
+@media (min-width: 480px) {
+	.cle-scene__list {
+		display: none;
+	}
+}
+
+.cle-scene__actions {
+	margin-top: var(--wp--preset--spacing--m);
+}
+
+/* Editor only. */
+.cle-scene.is-editing .cle-scene__pin {
+	animation: none;
+	touch-action: none;
+	cursor: grab;
+}
+
+.cle-scene.is-placing .cle-scene__frame {
+	cursor: crosshair;
+	outline: 2px dashed var(--wp--preset--color--accent);
+}

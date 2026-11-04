@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/coming-up",
+	"version": "1.0.0",
+	"title": "Coming up",
+	"category": "widgets",
+	"icon": "calendar-alt",
+	"description": "A row of small cards: the next events matching each word (for example Mega and Social) and the latest post. Updates itself.",
+	"keywords": [ "meetup", "events", "next", "preview" ],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"events": {
+			"type": "array",
+			"default": [
+				{ "match": "Mega", "label": "Next big night" },
+				{ "match": "Social", "label": "Next social" }
+			]
+		},
+		"showPost": { "type": "boolean", "default": true },
+		"postLabel": { "type": "string", "default": "Latest post" }
+	},
+	"supports": {
+		"html": false,
+		"spacing": { "margin": true }
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

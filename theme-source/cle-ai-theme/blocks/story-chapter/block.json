@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/story-chapter",
+	"version": "1.0.0",
+	"title": "Story chapter",
+	"category": "theme",
+	"icon": "media-document",
+	"parent": [ "cle/story" ],
+	"description": "One beat of the homepage story. Its settings drive the scene while it is on screen.",
+	"textdomain": "cle-ai",
+	"usesContext": [ "cle/layers", "cle/foregrounds", "cle/compositeId", "cle/nightId" ],
+	"attributes": {
+		"title": { "type": "string", "default": "" },
+		"icon": { "type": "string", "default": "" },
+		"layers": { "type": "array", "default": [], "items": { "type": "string" } },
+		"camera": { "type": "object", "default": { "x": 50, "y": 50, "zoom": 1 } },
+		"reveal": { "type": "boolean", "default": false },
+		"night": { "type": "boolean", "default": false },
+		"foreground": { "type": "string", "default": "" },
+		"bubbles": { "type": "array", "default": [] },
+		"hotspots": { "type": "boolean", "default": false },
+		"pattern": { "type": "boolean", "default": false },
+		"pin": { "type": "object" }
+	},
+	"supports": {
+		"html": false,
+		"color": { "background": true, "text": true },
+		"spacing": { "padding": true }
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}
