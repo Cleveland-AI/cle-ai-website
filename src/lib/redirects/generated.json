@@ -1,0 +1,366 @@
+[
+  {
+    "from": "/?attachment_id=114",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/?attachment_id=23",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/?p=10",
+    "to": "/blog/what-we-learned-running-183-meetups"
+  },
+  {
+    "from": "/?p=135",
+    "to": "/blog/voila-cle-ai-data-newsletter-september-2026"
+  },
+  {
+    "from": "/?p=136",
+    "to": "/blog/the-month-ai-agents-stopped-being-a-demo"
+  },
+  {
+    "from": "/?p=137",
+    "to": "/events/cle-ai-and-data-monthly-social-at-happy-dog-december"
+  },
+  {
+    "from": "/?p=138",
+    "to": "/events/october-workshop"
+  },
+  {
+    "from": "/?p=139",
+    "to": "/events/tonight-lightning-talks"
+  },
+  {
+    "from": "/?p=140",
+    "to": "/events/pop-up-coffee-chat"
+  },
+  {
+    "from": "/?p=141",
+    "to": "/events/online-reading-group"
+  },
+  {
+    "from": "/?p=142",
+    "to": "/events/hike-north-chagrin"
+  },
+  {
+    "from": "/?p=143",
+    "to": "/events/monthly-social-1"
+  },
+  {
+    "from": "/?p=144",
+    "to": "/events/monthly-social-2"
+  },
+  {
+    "from": "/?p=145",
+    "to": "/events/monthly-social-3"
+  },
+  {
+    "from": "/?p=146",
+    "to": "/events/monthly-social-4"
+  },
+  {
+    "from": "/?p=147",
+    "to": "/events/monthly-social-5"
+  },
+  {
+    "from": "/?p=148",
+    "to": "/events/monthly-social-6"
+  },
+  {
+    "from": "/?p=149",
+    "to": "/events/monthly-social-7"
+  },
+  {
+    "from": "/?p=150",
+    "to": "/events/monthly-social-8"
+  },
+  {
+    "from": "/?p=151",
+    "to": "/events/monthly-social-9"
+  },
+  {
+    "from": "/?p=152",
+    "to": "/events/monthly-social-10"
+  },
+  {
+    "from": "/?p=153",
+    "to": "/events/monthly-social-11"
+  },
+  {
+    "from": "/?p=154",
+    "to": "/events/monthly-social-12"
+  },
+  {
+    "from": "/?p=4",
+    "to": "/events/mega-meetup-at-the-museum"
+  },
+  {
+    "from": "/?p=5",
+    "to": "/events/monthly-social-at-happy-dog"
+  },
+  {
+    "from": "/?p=6",
+    "to": "/events/summer-in-the-flats"
+  },
+  {
+    "from": "/?p=7",
+    "to": "/events/winter-meetup-est-check"
+  },
+  {
+    "from": "/?p=8",
+    "to": "/blog/newsletter-september-roundup"
+  },
+  {
+    "from": "/?p=9",
+    "to": "/blog/podcast-episode-12"
+  },
+  {
+    "from": "/?page_id=11",
+    "to": "/"
+  },
+  {
+    "from": "/?page_id=171",
+    "to": "/about"
+  },
+  {
+    "from": "/?page_id=173",
+    "to": "/sponsors"
+  },
+  {
+    "from": "/?page_id=175",
+    "to": "/get-involved"
+  },
+  {
+    "from": "/?page_id=354",
+    "to": "/code-of-conduct"
+  },
+  {
+    "from": "/?page_id=397",
+    "to": "/a-plain-page"
+  },
+  {
+    "from": "/?page_id=399",
+    "to": "/a-plain-page-2"
+  },
+  {
+    "from": "/?page_id=405",
+    "to": "/privacy"
+  },
+  {
+    "from": "/cle-ai-data-logo/",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/index.php/2026/09/14/the-month-ai-agents-stopped-being-a-demo/",
+    "to": "/blog/the-month-ai-agents-stopped-being-a-demo"
+  },
+  {
+    "from": "/index.php/2026/09/19/voila-cle-ai-data-newsletter-september-2026/",
+    "to": "/blog/voila-cle-ai-data-newsletter-september-2026"
+  },
+  {
+    "from": "/index.php/2026/09/23/what-we-learned-running-183-meetups/",
+    "to": "/blog/what-we-learned-running-183-meetups"
+  },
+  {
+    "from": "/index.php/2026/09/24/podcast-episode-12/",
+    "to": "/blog/podcast-episode-12"
+  },
+  {
+    "from": "/index.php/2026/09/25/newsletter-september-roundup/",
+    "to": "/blog/newsletter-september-roundup"
+  },
+  {
+    "from": "/index.php/a-plain-page-2/",
+    "to": "/a-plain-page-2"
+  },
+  {
+    "from": "/index.php/a-plain-page/",
+    "to": "/a-plain-page"
+  },
+  {
+    "from": "/index.php/about/",
+    "to": "/about"
+  },
+  {
+    "from": "/index.php/author/curtis/",
+    "to": "/blog/author/curtis-oneal"
+  },
+  {
+    "from": "/index.php/author/ted/",
+    "to": "/blog/author/ted-troxell"
+  },
+  {
+    "from": "/index.php/author/will/",
+    "to": "/blog/author/will-tatz"
+  },
+  {
+    "from": "/index.php/category/blog/",
+    "to": "/blog/category/blog"
+  },
+  {
+    "from": "/index.php/category/meetup/",
+    "to": "/blog/category/meetup"
+  },
+  {
+    "from": "/index.php/category/newsletter/",
+    "to": "/blog/category/newsletter"
+  },
+  {
+    "from": "/index.php/category/podcast/",
+    "to": "/blog/category/podcast"
+  },
+  {
+    "from": "/index.php/code-of-conduct/",
+    "to": "/code-of-conduct"
+  },
+  {
+    "from": "/index.php/get-involved/",
+    "to": "/get-involved"
+  },
+  {
+    "from": "/index.php/meetup-event/cle-ai-and-data-monthly-social-at-happy-dog-december/",
+    "to": "/events/cle-ai-and-data-monthly-social-at-happy-dog-december"
+  },
+  {
+    "from": "/index.php/meetup-event/hike-north-chagrin/",
+    "to": "/events/hike-north-chagrin"
+  },
+  {
+    "from": "/index.php/meetup-event/mega-meetup-at-the-museum/",
+    "to": "/events/mega-meetup-at-the-museum"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-1/",
+    "to": "/events/monthly-social-1"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-10/",
+    "to": "/events/monthly-social-10"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-11/",
+    "to": "/events/monthly-social-11"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-12/",
+    "to": "/events/monthly-social-12"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-2/",
+    "to": "/events/monthly-social-2"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-3/",
+    "to": "/events/monthly-social-3"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-4/",
+    "to": "/events/monthly-social-4"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-5/",
+    "to": "/events/monthly-social-5"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-6/",
+    "to": "/events/monthly-social-6"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-7/",
+    "to": "/events/monthly-social-7"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-8/",
+    "to": "/events/monthly-social-8"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-9/",
+    "to": "/events/monthly-social-9"
+  },
+  {
+    "from": "/index.php/meetup-event/monthly-social-at-happy-dog/",
+    "to": "/events/monthly-social-at-happy-dog"
+  },
+  {
+    "from": "/index.php/meetup-event/october-workshop/",
+    "to": "/events/october-workshop"
+  },
+  {
+    "from": "/index.php/meetup-event/online-reading-group/",
+    "to": "/events/online-reading-group"
+  },
+  {
+    "from": "/index.php/meetup-event/pop-up-coffee-chat/",
+    "to": "/events/pop-up-coffee-chat"
+  },
+  {
+    "from": "/index.php/meetup-event/summer-in-the-flats/",
+    "to": "/events/summer-in-the-flats"
+  },
+  {
+    "from": "/index.php/meetup-event/tonight-lightning-talks/",
+    "to": "/events/tonight-lightning-talks"
+  },
+  {
+    "from": "/index.php/meetup-event/winter-meetup-est-check/",
+    "to": "/events/winter-meetup-est-check"
+  },
+  {
+    "from": "/index.php/privacy/",
+    "to": "/privacy"
+  },
+  {
+    "from": "/index.php/sponsors/",
+    "to": "/sponsors"
+  },
+  {
+    "from": "/scene/",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/cle-logo-1024x1024.png",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/cle-logo-150x150.png",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/cle-logo-300x300.png",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/cle-logo-768x768.png",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/cle-logo.png",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/1fb2bec663a7819b7dca10af69113ff6f03da463-1080x1080.png"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene-1024x571.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene-150x150.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene-1536x857.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene-300x167.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene-768x429.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  },
+  {
+    "from": "/wp-content/uploads/2026/09/scene.webp",
+    "to": "https://cdn.sanity.io/images/cleaiplaceholder/production/3623850b5ee35529359679926db67181f5bd6977-2000x1116.webp"
+  }
+]

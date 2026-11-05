@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/story",
+	"version": "1.0.0",
+	"title": "Story stage",
+	"category": "theme",
+	"icon": "format-video",
+	"description": "A pinned illustrated scene that changes as the chapters inside it scroll past.",
+	"textdomain": "cle-ai",
+	"attributes": {
+		"align": { "type": "string", "default": "full" },
+		"mode": { "type": "string", "enum": [ "stage", "stacked" ], "default": "stage" },
+		"layers": {
+			"type": "array",
+			"default": [
+				{ "slug": "lights", "label": "String lights and lamps", "imageId": 0 },
+				{ "slug": "room", "label": "Room and TV", "imageId": 0 },
+				{ "slug": "table-1", "label": "Table 1 (top left)", "imageId": 0 },
+				{ "slug": "table-2", "label": "Table 2 (bottom left)", "imageId": 0 },
+				{ "slug": "table-3", "label": "Table 3 (centre)", "imageId": 0 },
+				{ "slug": "table-4", "label": "Table 4 (at the counter)", "imageId": 0 },
+				{ "slug": "bar-staff", "label": "Bartender and back bar", "imageId": 0 },
+				{ "slug": "counter", "label": "Counter and hot dogs", "imageId": 0 }
+			]
+		},
+		"nightId": { "type": "number", "default": 0 },
+		"compositeId": { "type": "number", "default": 0 },
+		"patternId": { "type": "number", "default": 0 },
+		"foregrounds": { "type": "array", "default": [ { "slug": "hotdog-beer", "label": "Hot dog and beer", "imageId": 0 } ] },
+		"tv": { "type": "object", "default": { "x": 35.3, "y": 9.9, "w": 27.2, "h": 22 } },
+		"tvLabel": { "type": "string", "default": "Next big night" },
+		"tvMatch": { "type": "string", "default": "Mega" },
+		"sponsors": { "type": "string", "default": "" },
+		"hotspots": { "type": "array", "default": [] },
+		"markerStyle": { "type": "string", "enum": [ "numbered", "dot", "question", "icon" ], "default": "icon" },
+		"railLabel": { "type": "string", "default": "Story chapters" }
+	},
+	"providesContext": {
+		"cle/layers": "layers",
+		"cle/foregrounds": "foregrounds",
+		"cle/compositeId": "compositeId",
+		"cle/nightId": "nightId"
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [ "full" ]
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [ "cle-hotspots", "file:./style.css" ],
+	"render": "file:./render.php"
+}

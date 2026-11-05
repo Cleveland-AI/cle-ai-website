@@ -1,0 +1,35 @@
+.wp-block-cle-embed-form {
+	max-width: 100%;
+}
+
+.cle-embed-form__frame {
+	display: block;
+	width: 100%;
+	border: 0;
+	background: var(--wp--preset--color--surface-raised);
+	border-radius: var(--wp--custom--radius);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-embed-form__link {
+	margin: var(--wp--preset--spacing--xs) 0 0;
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+}
+
+/* On a coloured band the fallback line takes the band's text colour, not slate. */
+.has-background .cle-embed-form__link {
+	color: inherit;
+}
+
+/* Editor: a labelled placeholder until a URL is set. */
+.cle-embed-form__placeholder {
+	display: grid;
+	place-items: center;
+	min-height: 12rem;
+	padding: var(--wp--preset--spacing--m);
+	text-align: center;
+	color: var(--wp--preset--color--ink-soft);
+	background: var(--wp--preset--color--pale-blue);
+	border-radius: var(--wp--custom--radius);
+}

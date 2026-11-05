@@ -1,0 +1,65 @@
+<!-- wp:template-part {"slug":"announcement-bar","tagName":"div"} /-->
+
+<!-- wp:template-part {"slug":"header","tagName":"div"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"var:preset|spacing|section","bottom":"var:preset|spacing|section"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:var(--wp--preset--spacing--section);padding-bottom:var(--wp--preset--spacing--section)">
+<!-- wp:heading {"level":1,"align":"wide"} -->
+<h1 class="wp-block-heading alignwide">Events</h1>
+<!-- /wp:heading -->
+
+<!-- wp:cle/venue-map {"align":"wide"} /-->
+
+<!-- wp:heading {"align":"wide"} -->
+<h2 class="wp-block-heading alignwide">Upcoming</h2>
+<!-- /wp:heading -->
+<!-- wp:query {"queryId":1,"query":{"perPage":50,"pages":0,"offset":0,"postType":"meetup_events","order":"asc","orderBy":"date","inherit":false,"cleWhen":"upcoming"},"namespace":"cle/events-upcoming","align":"wide"} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template -->
+<!-- wp:cle/event-meta {"showVenue":false,"showRsvp":false} /-->
+
+<!-- wp:post-title {"isLink":true,"level":3,"fontSize":"xl"} /-->
+
+<!-- wp:cle/event-meta {"showDate":false,"venueStyle":"name"} /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:cle/mascot {"pose":"sleep","width":200} /-->
+
+<!-- wp:paragraph -->
+<p>No events scheduled right now. <a href="https://www.meetup.com/cleveland-ai-data/">Check the Meetup group.</a></p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query -->
+
+<!-- wp:heading {"align":"wide"} -->
+<h2 class="wp-block-heading alignwide">Past events</h2>
+<!-- /wp:heading -->
+<!-- wp:query {"queryId":2,"query":{"perPage":12,"pages":0,"offset":0,"postType":"meetup_events","order":"desc","orderBy":"date","inherit":false,"cleWhen":"past"},"namespace":"cle/events-past","align":"wide"} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9"} /-->
+
+<!-- wp:cle/event-meta {"showVenue":false,"showRsvp":false,"fontSize":"s"} /-->
+
+<!-- wp:post-title {"isLink":true,"level":3,"fontSize":"l"} /-->
+
+<!-- wp:cle/event-meta {"showDate":false,"showRsvp":false,"venueStyle":"name","fontSize":"s"} /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination -->
+<!-- wp:query-pagination-previous /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>No events here yet.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"div"} /-->

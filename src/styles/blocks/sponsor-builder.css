@@ -1,0 +1,177 @@
+/* cle/sponsor-builder: perk buttons on the left, the package (pile, tier, button) on the right. */
+.cle-builder {
+	display: grid;
+	gap: var(--wp--preset--spacing--m);
+	align-items: start;
+}
+
+@media (min-width: 900px) {
+	.cle-builder {
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+	}
+}
+
+.cle-builder__picks {
+	display: grid;
+	gap: var(--wp--preset--spacing--xs);
+}
+
+.cle-builder__label {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 600;
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-builder__perk {
+	display: grid;
+	grid-template-columns: 3.5rem minmax(0, 1fr) 1.75rem;
+	gap: var(--wp--preset--spacing--s);
+	align-items: center;
+	padding: var(--wp--preset--spacing--xs) var(--wp--preset--spacing--s) var(--wp--preset--spacing--xs) var(--wp--preset--spacing--xs);
+	font: inherit;
+	text-align: left;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--surface-raised);
+	border: 2px solid transparent;
+	border-radius: var(--wp--custom--radius);
+	box-shadow: var(--wp--custom--clay--raised);
+	cursor: pointer;
+	transition: transform 0.15s, border-color 0.15s;
+}
+
+.cle-builder__perk:hover {
+	transform: translateY(-2px);
+}
+
+.cle-builder__perk[aria-pressed="true"] {
+	border-color: var(--wp--preset--color--accent);
+	box-shadow: var(--wp--custom--clay--pressed);
+	transform: none;
+}
+
+.cle-builder__icon {
+	width: 3.5rem;
+	height: 3.5rem;
+	object-fit: contain;
+}
+
+.cle-builder__text {
+	display: grid;
+	gap: 2px;
+}
+
+.cle-builder__text span {
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-builder__check {
+	width: 1.75rem;
+	height: 1.75rem;
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--pressed);
+	background: var(--wp--preset--color--surface);
+}
+
+.cle-builder__perk[aria-pressed="true"] .cle-builder__check {
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 35%, var(--wp--preset--color--accent)), var(--wp--preset--color--accent) 62%);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-builder__summary {
+	position: sticky;
+	top: var(--wp--preset--spacing--m);
+	display: grid;
+	gap: var(--wp--preset--spacing--s);
+	padding: var(--wp--preset--spacing--m);
+	background: var(--wp--preset--color--pale-blue);
+	border-radius: var(--wp--custom--clay--card);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+/* The package: picked items drop in and overlap like things piled on a table. */
+.cle-builder__pile {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-end;
+	min-height: 7rem;
+}
+
+/* Nothing picked yet: keep the empty pile short on phones so the prompt stays near the perks. */
+.cle-builder__pile:not(:has(.is-on)) {
+	min-height: 0;
+}
+
+.cle-builder__piece {
+	display: none;
+	width: 6rem;
+	height: 6rem;
+	margin: 0 -0.5rem;
+	object-fit: contain;
+}
+
+.cle-builder__piece.is-on {
+	display: block;
+	animation: cle-builder-drop 0.45s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+@keyframes cle-builder-drop {
+	0% { opacity: 0; transform: translateY(-40%) scale(0.9, 1.1); }
+	60% { opacity: 1; transform: translateY(0) scale(1.1, 0.88); }
+	100% { transform: none; }
+}
+
+.cle-builder__result {
+	margin: 0;
+	font-weight: 600;
+	text-align: center;
+}
+
+.cle-builder__tiers {
+	display: grid;
+	gap: var(--wp--preset--spacing--xxs);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cle-builder__tiers li {
+	display: flex;
+	justify-content: space-between;
+	padding: var(--wp--preset--spacing--xxs) var(--wp--preset--spacing--s);
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+	border-radius: var(--wp--custom--clay--pill);
+	transition: background 0.2s, color 0.2s;
+}
+
+.cle-builder__tiers li.is-match {
+	font-weight: 700;
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--surface-raised);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-builder__summary .wp-element-button {
+	width: 100%;
+	text-align: center;
+}
+
+.cle-builder__summary p:last-child {
+	margin: 0;
+}
+
+/* Brand-shape stand-ins (before the illustrations exist) read better a little smaller. */
+.cle-builder .is-stand-in {
+	padding: 0.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-builder__perk,
+	.cle-builder__piece.is-on {
+		transition: none;
+		animation: none;
+	}
+}

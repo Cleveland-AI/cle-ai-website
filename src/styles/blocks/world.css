@@ -1,0 +1,316 @@
+/*
+ * cle/world. Stacked by default: the stage is hidden and each chapter shows its own crop
+ * (cle/world-chapter styles). The pinned stage switches on only with JS (html.cle-js),
+ * motion allowed, enough height, and mode = stage.
+ */
+.wp-block-cle-world {
+	position: relative;
+}
+
+.cle-world__stage {
+	display: none;
+}
+
+/* Hints about markers and tags, which only exist on the stage. */
+.cle-world-only {
+	display: none;
+}
+
+.editor-styles-wrapper .cle-world-only {
+	display: block;
+}
+
+.cle-world__chapters {
+	padding-inline: var(--wp--preset--spacing--s);
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 400px) {
+	.cle-js .wp-block-cle-world.is-mode-stage {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	/* Phones and tablets: the stage pinned at the top, chapters scrolling beneath it.
+	   A short fade melts the bottom of the picture into the page. */
+	.cle-js .is-mode-stage .cle-world__stage {
+		display: block;
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		align-self: start;
+		height: 46svh;
+		overflow: hidden;
+		background-color: var(--wp--preset--color--surface);
+	}
+
+	.cle-js .is-mode-stage .cle-world__stage::after {
+		content: "";
+		position: absolute;
+		inset: auto 0 0;
+		z-index: 1;
+		height: var(--wp--preset--spacing--l);
+		pointer-events: none;
+		background: linear-gradient(to top, var(--wp--preset--color--surface), transparent);
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 54svh;
+		scroll-margin-top: 46svh;
+		padding-block: var(--wp--preset--spacing--m);
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter__body {
+		max-width: none;
+		margin-inline: 0;
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter__crop {
+		display: none;
+	}
+
+	.cle-js .is-mode-stage .cle-world-only {
+		display: block;
+	}
+
+	/* The first chapter is what people see on landing: start at the top, not centred, so
+	   the about line and the coming-up cards fit on the first screen. */
+	.cle-js .is-mode-stage .cle-wchapter:first-child {
+		justify-content: flex-start;
+	}
+}
+
+/* Desktop: the picture runs full width behind the chapters. The words sit on a veil of page
+   colour that fades into the picture, so there is no edge. In the finale the side veil lifts,
+   and a veil as tall as the last chapter's words (--fin-h, from view.js) rises from the bottom. */
+@media (prefers-reduced-motion: no-preference) and (min-height: 400px) and (min-width: 1024px) {
+	.cle-js .is-mode-stage .cle-world__stage,
+	.cle-js .is-mode-stage .cle-world__chapters {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.cle-js .is-mode-stage .cle-world__stage {
+		height: 100svh;
+	}
+
+	.cle-js .is-mode-stage .cle-world__stage::before,
+	.cle-js .is-mode-stage .cle-world__stage::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		height: auto;
+		pointer-events: none;
+	}
+
+	.cle-js .is-mode-stage .cle-world__stage::before {
+		opacity: var(--cle-side, 1);
+		background: linear-gradient(90deg, var(--wp--preset--color--surface) 0 34%, transparent 45%);
+	}
+
+	.cle-js .is-mode-stage .cle-world__stage::after {
+		opacity: var(--cle-bottom, 0);
+		background: linear-gradient(0deg, var(--wp--preset--color--surface) 0 var(--cle-fin-h, 30%), transparent calc(var(--cle-fin-h, 30%) + 140px));
+	}
+
+	.cle-js .is-mode-stage .cle-world__chapters {
+		position: relative;
+		z-index: 3;
+		padding-inline: var(--wp--custom--gutter);
+		pointer-events: none;
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter__body {
+		pointer-events: auto;
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter {
+		width: min(32vw - 32px, 440px);
+		min-height: 100svh;
+		scroll-margin-top: 0;
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter:last-child {
+		width: auto;
+		max-width: var(--wp--style--global--wide-size);
+		justify-content: flex-end;
+		padding-block: 0 var(--wp--preset--spacing--xl);
+	}
+
+	.cle-js .is-mode-stage .cle-wchapter:last-child p {
+		max-width: 72ch;
+	}
+}
+
+/* The picture: laid out at its natural size, scaled and moved by view.js. */
+.cle-world__view {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform-origin: 0 0;
+	will-change: transform;
+}
+
+.cle-world__view img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* A chapter can hide the lower part of the picture (fadeBelow): this layer fades from the line
+   view.js sets in --cle-cut-y down into the page colour, and fades the picture's top edge
+   (--cle-top-y) when the kept part floats centred in the stage. */
+.cle-world__cut {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: linear-gradient(180deg,
+		var(--wp--preset--color--surface) var(--cle-top-y, -1000px),
+		transparent calc(var(--cle-top-y, -1000px) + 56px),
+		transparent calc(var(--cle-cut-y, 100000px) - 48px),
+		var(--wp--preset--color--surface) calc(var(--cle-cut-y, 100000px) + 24px));
+}
+
+/* Dot walks the city: he stands inside the picture (so he zooms with it), feet on his stop,
+   facing the way he is going. view.js sets his place, --hop while he hops, and is-walking. */
+.cle-world__walker {
+	position: absolute;
+	width: 3.8%;
+	aspect-ratio: 1;
+	pointer-events: none;
+	transform: translate(-50%, calc(-100% - var(--hop, 0%))) scaleX(var(--face, 1));
+	transform-origin: 50% 100%;
+	filter: drop-shadow(0 0.3em 0.5em rgba(0, 32, 80, 0.25));
+}
+
+.cle-world__walker img {
+	position: absolute;
+	inset: auto 0 0;
+	width: 100%;
+	height: auto;
+	transition: opacity 0.25s;
+}
+
+.cle-world__walker-side {
+	opacity: 0;
+}
+
+.cle-world__walker.is-walking .cle-world__walker-side {
+	opacity: 1;
+}
+
+.cle-world__walker.is-walking .cle-world__walker-front {
+	opacity: 0;
+}
+
+/* Hotspot groups cover the stage; let clicks through to the picture except on their own pins. */
+.cle-world__hotspots {
+	pointer-events: none;
+}
+
+.cle-world__hotspots .cle-scene__pin,
+.cle-world__hotspots .cle-scene__pop {
+	pointer-events: auto;
+}
+
+/* Markers and tags sit above the veils. */
+.cle-world__hotspots,
+.cle-world__tags {
+	z-index: 2;
+}
+
+/* Tap-able markers over the stage, one group per chapter, shown when the camera settles. */
+.cle-world__hotspots {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.35s, visibility 0.35s;
+}
+
+.cle-world__hotspots.is-on {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Finale tags: one per place, positioned by view.js; each flies back to its chapter. */
+.cle-world__tags {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.cle-world__tag {
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	display: flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--xxs);
+	min-height: 44px;
+	padding: 0 var(--wp--preset--spacing--s) 0 var(--wp--preset--spacing--xs);
+	transform: translate(calc(-50% + var(--dx, 0px)), -50%);
+	font: inherit;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+	color: var(--wp--preset--color--indigo);
+	background: var(--wp--preset--color--white);
+	border: 0;
+	border-radius: var(--wp--custom--clay--pill);
+	box-shadow: var(--wp--custom--clay--raised);
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.4s;
+	transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.cle-world__tag::before {
+	content: "";
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent);
+}
+
+.cle-world__tags.is-on .cle-world__tag {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.cle-world__tag:focus-visible,
+.cle-world__tag:hover {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 2px;
+}
+
+.cle-world__tag-short {
+	display: none;
+}
+
+@media (max-width: 1023px) {
+	.cle-world__tag {
+		gap: 6px;
+		min-height: 36px;
+		padding: 0 var(--wp--preset--spacing--xxs) 0 var(--wp--preset--spacing--xxs);
+		font-size: var(--wp--preset--font-size--xs);
+	}
+
+	.cle-world__tag::before {
+		width: 8px;
+		height: 8px;
+	}
+
+	.cle-world__tag-long {
+		display: none;
+	}
+
+	.cle-world__tag-short {
+		display: inline;
+	}
+}

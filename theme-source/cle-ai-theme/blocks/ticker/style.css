@@ -1,0 +1,107 @@
+/* Fixed height: the ticker must never change size as items or thumbnails load. */
+.wp-block-cle-ticker {
+	display: flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--xs);
+	height: var(--wp--custom--ticker--height);
+	overflow: hidden;
+	padding-inline: var(--wp--preset--spacing--s);
+	box-shadow: var(--wp--custom--clay--bar);
+	font-size: var(--wp--preset--font-size--s);
+}
+
+.cle-ticker__label {
+	flex: none;
+	margin: 0;
+}
+
+.cle-ticker__viewport {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+.cle-ticker__track {
+	display: flex;
+	width: max-content;
+	height: 100%;
+	animation: cle-ticker var(--cle-ticker-duration, 50s) linear infinite;
+}
+
+.cle-ticker__list {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cle-ticker__list li {
+	padding-right: var(--wp--preset--spacing--l);
+	white-space: nowrap;
+}
+
+.cle-ticker__list a {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--wp--preset--spacing--xxs);
+	text-decoration: none;
+}
+
+.cle-ticker__list a:hover span {
+	text-decoration: underline;
+	text-decoration-color: var(--wp--preset--color--accent);
+}
+
+.cle-ticker__thumb {
+	flex: none;
+	width: var(--wp--custom--ticker--thumb);
+	height: var(--wp--custom--ticker--thumb);
+	object-fit: cover;
+}
+
+.cle-ticker__date {
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-ticker__viewport:hover .cle-ticker__track,
+.cle-ticker__viewport:focus-within .cle-ticker__track,
+.wp-block-cle-ticker.is-paused .cle-ticker__track {
+	animation-play-state: paused;
+}
+
+.cle-ticker__toggle {
+	flex: none;
+	font: inherit;
+	font-weight: 600;
+	color: inherit;
+	background: var(--wp--preset--color--surface-raised);
+	border: 0;
+	border-radius: var(--wp--custom--clay--pill);
+	box-shadow: var(--wp--custom--clay--raised);
+	padding: var(--wp--preset--spacing--xxxs) var(--wp--preset--spacing--s);
+	cursor: pointer;
+}
+
+@keyframes cle-ticker {
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+/* Reduced motion: no animation, a static row the reader can scroll themselves. */
+@media (prefers-reduced-motion: reduce) {
+	.cle-ticker__track {
+		animation: none;
+	}
+
+	.cle-ticker__viewport {
+		overflow-x: auto;
+	}
+
+	.cle-ticker__list[aria-hidden],
+	.cle-ticker__toggle {
+		display: none;
+	}
+}

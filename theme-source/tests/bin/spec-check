@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+"""Acceptance checks from cle-posts-events-spec.md, run over HTTP against the test site
+(tests/bin/up, seeded like cle-ai.com). Fetches real pages, so it covers the templates as
+visitors see them, then checks WordPress logged no PHP notices while serving them."""
+import json, re, subprocess, sys, urllib.request, urllib.error, os
+
+BASE = "http://localhost:8090"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+fails = []
+
+def check(ok, label):
+    print(("ok   - " if ok else "FAIL - ") + label)
+    if not ok:
+        fails.append(label)
+
+def get(path):
+    try:
+        with urllib.request.urlopen(BASE + path) as r:
+            return r.status, r.read().decode()
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode()
+
+def wp(*args):
+    return subprocess.run([os.path.join(ROOT, "bin", "wp"), *args], capture_output=True, text=True).stdout
+
+def main_html(html):
+    m = re.search(r"<main.*?</main>", html, re.S)
+    return m.group(0) if m else ""
+
+def order(html, needles):
+    pos = [html.find(n) for n in needles]
+    return all(p >= 0 for p in pos) and pos == sorted(pos)
+
+subprocess.run(["docker", "compose", "-f", os.path.join(ROOT, "docker-compose.yml"), "exec", "-T", "wp", "sh", "-c", "rm -f wp-content/debug.log"], capture_output=True)
+
+# --- Posts -------------------------------------------------------------------------------
+code, html = get("/index.php/2026/09/19/voila-cle-ai-data-newsletter-september-2026/")
+main = main_html(html)
+check(code == 200, "newsletter post renders at its /index.php/2026/09/19/... URL")
+check("Voilà: CLE AI &amp; DATA newsletter, September 2026" in main or "Voilà: CLE AI &#038; DATA newsletter" in main, "post title")
+check(">Ted Troxell<" in main and "September 19, 2026" in main, "author name and publish date")
+check(">Blog<" in main and ">Newsletter<" in main, "both categories show as badges")
+check("wp-block-post-featured-image" in main, "featured image when the post has one")
+check(all(t in main for t in ["<h2", "<ul", "<blockquote", "<hr", "wp-block-post-content"]), "content: headings, lists, quotes and separators inside the post-content block")
+check("post-navigation-link-previous" in main or "post-navigation-link-next" in main, "previous/next post links")
+
+code, html = get("/index.php/2026/09/14/the-month-ai-agents-stopped-being-a-demo/")
+main = main_html(html)
+check(code == 200 and ">Will Tatz<" in main, "second test post renders with its author")
+check("wp-block-post-featured-image" not in main, "a post without a featured image has no image element at all")
+check(main.count('rel="tag"') == 1, "a single-category post shows one badge")
+
+for slug in ["blog", "newsletter", "podcast"]:
+    code, html = get(f"/index.php/category/{slug}/")
+    main = main_html(html)
+    check(code == 200 and "wp-block-query-title" in main and main.count("wp-block-post-title") >= 1, f"category archive /category/{slug}/ lists posts under an archive title")
+code, html = get("/index.php/category/blog/")
+main = main_html(html)
+check("By</p>" in main and "wp-block-post-author-name" in main and "wp-block-post-date" in main and "wp-block-post-excerpt" in main, "archive entries have author, date and excerpt")
+code, html = get("/index.php/author/curtis/")
+check(code == 200 and "Podcast episode 12" in html, "author archive works")
+code, html = get("/index.php/2026/09/")
+check(code == 200 and "wp-block-post-title" in html, "date archive works")
+
+# --- Events archive ----------------------------------------------------------------------
+code, html = get("/index.php/meetup-event/")
+main = main_html(html)
+check(code == 200, "/index.php/meetup-event/ renders")
+up_at, past_at = main.find(">Upcoming<"), main.find(">Past events<")
+check(0 <= up_at < past_at, "Upcoming section comes before Past")
+upcoming, past = main[up_at:past_at], main[past_at:]
+check("Tonight: lightning talks" in upcoming and "Tonight: lightning talks" not in past, "an event taking place today is under Upcoming")
+titles_up = re.findall(r'wp-block-post-title[^>]*><a[^>]*>([^<]+)<', upcoming)
+check(titles_up[:1] == ["Tonight: lightning talks"], "Upcoming is soonest first")
+check(upcoming.count("RSVP on Meetup") >= 3 and "RSVP on Meetup" not in past, "RSVP links on upcoming cards only")
+check(len(re.findall(r'wp-block-post-title', past)) == 12 and "query-2-page=2" in past, "Past shows 12 events with a link to more")
+mega = upcoming.find("Mega Meetup at the Museum</a>")
+card = upcoming[upcoming.rfind("<li", 0, mega): upcoming.find("</li>", mega)]
+check(order(card, ["cle-event-meta__when", "Mega Meetup at the Museum", "Cleveland Museum of Natural History", "RSVP on Meetup"]), "each card: date, title, venue name, RSVP")
+code, p2 = get("/index.php/meetup-event/?query-2-page=2")
+check(code == 200 and len(re.findall(r'wp-block-post-title', main_html(p2)[main_html(p2).find(">Past events<"):])) >= 1, "the second page of past events works")
+
+# --- Event pages -------------------------------------------------------------------------
+code, html = get("/index.php/meetup-event/mega-meetup-at-the-museum/")
+main = main_html(html)
+check(code == 200, "fully populated event renders at /index.php/meetup-event/<slug>/")
+check(order(main, ["wp-block-post-title", ">Upcoming<", "cle-event-meta__when", "Cleveland Museum of Natural History", "query=41.51152,-81.612877", "RSVP on Meetup", "wp-block-post-content", "Organized by", "All events"]),
+      "event page order: title, status, date/time, venue, map-linked address, RSVP, content, organizer, back link")
+check(re.search(r"(Mon|Tue|Wednes|Thurs|Fri|Satur|Sun)[a-z]*day, \d{1,2} [A-Z][a-z]+ 20\d\d, 5:00 – 8:30 PM", main) is not None, "date and time in the spec's format, date once")
+check('href="http://localhost:8090/index.php/meetup-event/"' in main, "back link uses the archive URL with /index.php/")
+ld = re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S)
+data = [json.loads(x) for x in ld]
+ev = next((d for d in data if d.get("@type") == "Event"), None)
+check(ev is not None, "Event JSON-LD present and valid JSON")
+if ev:
+    check(re.match(r"\d{4}-\d\d-\d\dT17:00:00-0[45]:00$", ev.get("startDate", "")) and ev.get("endDate", "").endswith(":30:00" + ev["startDate"][-6:]), "startDate/endDate ISO 8601 with offset")
+    loc = ev.get("location", {})
+    check(loc.get("@type") == "Place" and loc.get("address", {}).get("@type") == "PostalAddress" and loc.get("geo", {}).get("latitude") == 41.51152, "location is a Place with PostalAddress and geo")
+    check(ev.get("organizer", {}).get("name") == "CLE AI & DATA" and ev.get("url", "").startswith("https://www.meetup.com/"), "organizer from meta; url is the Meetup RSVP link")
+    check(ev.get("eventStatus") == "https://schema.org/EventScheduled" and ev.get("name") == "Mega Meetup at the Museum", "eventStatus and name")
+code, html = get("/index.php/meetup-event/monthly-social-at-happy-dog/")
+ev2 = next((json.loads(x) for x in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S) if '"Event"' in x), {})
+check(ev2.get("organizer", {}).get("nonprofitStatus") == "https://schema.org/Nonprofit501c3", "when CLE AI & DATA organizes, the JSON-LD marks it a 501(c)(3)")
+
+code, html = get("/index.php/meetup-event/summer-in-the-flats/")
+main = main_html(html)
+check(code == 200 and ">Past<" in main and "RSVP on Meetup" not in main and "wp-element-button" not in main, "past event: status Past, no RSVP button")
+code, html = get("/index.php/meetup-event/cle-ai-and-data-monthly-social-at-happy-dog-december/")
+ev = next((json.loads(x) for x in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S) if '"Event"' in x), {})
+check(code == 200 and ev.get("startDate") == "2026-12-10T18:00:00-05:00" and "Thursday, 10 December 2026, 6:00 – 8:00 PM" in html, "December event: EST offset and correct local time")
+code, html = get("/index.php/meetup-event/october-workshop/")
+check(code == 200 and "2026-10-22T10:00:00-04:00" in html and "Thursday, 22 October 2026, 10:00 AM – 1:00 PM" in html, "October event: EDT offset, AM and PM both shown")
+code, html = get("/index.php/meetup-event/pop-up-coffee-chat/")
+main = main_html(html)
+check(code == 200 and "Rising Star Coffee" in main and "RSVP on Meetup" not in main and "Organized by" not in main and " – " not in re.sub(r"<[^>]+>", "", main.split("cle-event-meta__when")[1][:200]), "partial event: name-only venue, no end, no RSVP, no organizer label")
+code, html = get("/index.php/meetup-event/online-reading-group/")
+main = main_html(html)
+check(code == 200 and "cle-event-meta__where" not in main, "event with no venue data omits the venue block")
+ev = next((json.loads(x) for x in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S) if '"Event"' in x), {})
+check("location" not in ev and all(v not in ("", [], {}) for v in ev.values()), "no empty fields in the JSON-LD of a bare event")
+
+# --- New pages (About, Sponsors, Get involved) and the embargoed announcement ----------
+for slug, must in [("about", ["cle-team-card__photo", "Making AI accessible to", "cle-beads__bead"]), ("sponsors", ["cle-sponsors", "Arista Networks"]), ("get-involved", ["timcleaidata.substack.com/embed", "wp-block-cle-coming-up"])]:
+    code, html = get(f"/index.php/{slug}/")
+    main = main_html(html)
+    check(code == 200 and all(m in main for m in must), f"/{slug}/ renders with its content")
+    check(main.count("<h1") == 1 and "wp-block-post-title" not in main, f"/{slug}/ has exactly one h1 (landing template, no post title)")
+code, html = get("/index.php/about/")
+# Ted chose (Oct 25) to show Helen Shere's bio, which names Data in the Land as the community she
+# co-founded; that one phrase is allowed, nothing else about the merger.
+HELEN = "co-founder of Data in the Land, a Cleveland community for data professionals"
+check(html.count('class="cle-team-card__lead"') == 3 and "Data in the Land" not in html.replace(HELEN, ""), "About: three leaders, nothing about the merger before Nov 4")
+# A pattern page on the default page template (as on cle-ai.com): full-width sections, its own h1
+# only, no repeated page title. An ordinary page keeps its title.
+wp("eval", "$p=get_page_by_path('about'); update_post_meta($p->ID,'_wp_page_template','default');")
+code, html = get("/index.php/about/")
+main = main_html(html)
+check(main.count("<h1") == 1 and "wp-block-post-title" not in main and re.search(r'class="[^"]*\balignfull\b[^"]*\bwp-block-post-content\b', main) is not None, "About on the default template: one headline, no repeated title, full-width content")
+wp("eval", "$p=get_page_by_path('about'); update_post_meta($p->ID,'_wp_page_template','page-landing');")
+code, html = get("/index.php/sample-page/")
+check(code == 200 and 'class="wp-block-post-title"' in html, "an ordinary page still shows its title")
+code, _ = get("/index.php/2026/11/04/data-in-the-land-joins-cle-ai-data/")
+check(code == 404, "the merger announcement is not public")
+code, html = get("/")
+check("Data in the Land" not in html and "lexend-700-latin.woff2" in html, "homepage: no merger mention; Lexend loads")
+leaks = [path for path in ["/", "/index.php/about/", "/index.php/sponsors/", "/index.php/get-involved/", "/index.php/meetup-event/"] if re.search(r"Data in the Land|weekly job|east side", main_html(get(path)[1]).replace(HELEN, ""), re.I)]
+check(not leaks, "no public page mentions the merger, weekly job posts or east side meetups before Nov 4" + (f": {leaks}" if leaks else ""))
+
+# --- No broken internal links from the menu or the new pages (the code of conduct page is
+# content the site owner creates, so it is allowed to be missing on the test site).
+links = set()
+for path in ["/", "/index.php/about/", "/index.php/sponsors/", "/index.php/get-involved/"]:
+    links |= set(re.findall(r'href="(http://localhost:8090/[^"#?]*)"', get(path)[1]))
+pages = [l for l in links if not re.search(r"\.(css|js|png|webp|woff2)$|wp-json|xmlrpc|feed|wp-content|/code-of-conduct/", l)]
+broken = [l for l in pages if get(l.replace(BASE, ""))[0] != 200]
+check(pages and not broken, f"every internal link on the menu and new pages resolves ({len(pages)} links)" + (f": {broken}" if broken else ""))
+
+# --- Every post and event at its URL -----------------------------------------------------
+urls = [u for u in wp("post", "list", "--post_type=post,meetup_events", "--post_status=publish", "--field=url").split() if u.startswith("http")]
+bad = [u for u in urls if get(u.replace(BASE, ""))[0] != 200]
+check(urls and not bad, f"every published post and event returns 200 ({len(urls)} URLs)" + (f": {bad}" if bad else ""))
+
+log = subprocess.run(["docker", "compose", "-f", os.path.join(ROOT, "docker-compose.yml"), "exec", "-T", "wp", "sh", "-c", "cat wp-content/debug.log 2>/dev/null"], capture_output=True, text=True).stdout.strip()
+check(log == "", "no PHP notices with WP_DEBUG on" + ("" if not log else ":\n" + log[:2000]))
+
+print(f"\n{len(fails)} failed" if fails else "\nAll spec checks passed.")
+sys.exit(1 if fails else 0)

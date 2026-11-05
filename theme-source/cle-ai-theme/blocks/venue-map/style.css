@@ -1,0 +1,61 @@
+/* cle/venue-map: the clay map with numbered pins, and the same venues as a numbered list. */
+.cle-map__frame {
+	position: relative;
+	margin: 0 0 var(--wp--preset--spacing--s);
+}
+
+.cle-map__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--wp--custom--clay--card);
+}
+
+.cle-map__list {
+	display: grid;
+	gap: var(--wp--preset--spacing--xs);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: cle-map;
+}
+
+.cle-map__list li {
+	position: relative;
+	padding-left: 2.5rem;
+	counter-increment: cle-map;
+}
+
+/* Numbers match the pins: small coral clay balls. */
+.cle-map__list li::before {
+	content: counter(cle-map);
+	position: absolute;
+	left: 0;
+	top: 0.1em;
+	display: grid;
+	place-items: center;
+	width: 1.75rem;
+	height: 1.75rem;
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	color: var(--wp--preset--color--ink);
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 30%, var(--wp--preset--color--coral)), var(--wp--preset--color--coral) 60%);
+	border-radius: 50%;
+	box-shadow: var(--wp--custom--clay--ball);
+}
+
+.cle-map__list strong {
+	display: block;
+}
+
+.cle-map__list span {
+	font-size: var(--wp--preset--font-size--s);
+	color: var(--wp--preset--color--ink-soft);
+}
+
+/* With the map, the list is the readable key under it; without, it is the whole block. */
+@media (min-width: 782px) {
+	.cle-map__list:not(.is-only) {
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+	}
+}

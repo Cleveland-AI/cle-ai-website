@@ -1,0 +1,85 @@
+/* cle/logo: four clay dots positioned from the logo artwork (dots.php). */
+.wp-block-cle-logo {
+	display: inline-block;
+	flex: none;
+	line-height: 0;
+	text-decoration: none;
+	border-radius: var(--wp--custom--radius);
+}
+
+.cle-logo__mark {
+	position: relative;
+	display: block;
+	width: var(--wp--custom--logo-height);
+	height: var(--wp--custom--logo-height);
+}
+
+/* Each dot is a clay ball: a highlight up and to the left, shading underneath. `translate` is
+   separate from `transform`, so view.js can lean a dot while an animation squashes it. */
+.cle-logo__dot {
+	position: absolute;
+	left: calc(var(--x) - var(--r));
+	top: calc(var(--y) - var(--r));
+	width: calc(var(--r) * 2);
+	height: calc(var(--r) * 2);
+	background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--wp--preset--color--white) 35%, var(--c)), var(--c) 62%);
+	border-radius: 50%;
+	box-shadow: inset 0 -2px 2px color-mix(in srgb, var(--wp--preset--color--ink) 18%, transparent), 0 2px 3px -1px color-mix(in srgb, var(--wp--preset--color--ink) 30%, transparent);
+	transform-origin: 50% 100%;
+	translate: var(--dx, 0px) var(--dy, 0px);
+	transition: translate 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	/* First visit only (html.cle-logo-seen is set before paint on later pages): drop and squash. */
+	html:not(.cle-logo-seen) .cle-logo__dot {
+		animation: cle-logo-drop 0.7s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+		animation-delay: calc(0.15s + var(--i) * 0.13s);
+	}
+
+	.wp-block-cle-logo:hover .cle-logo__dot,
+	.wp-block-cle-logo:focus-visible .cle-logo__dot,
+	.wp-block-cle-logo.is-jiggling .cle-logo__dot {
+		animation: cle-logo-jiggle 0.6s ease-out both;
+		animation-delay: calc(var(--i) * 0.06s);
+	}
+}
+
+@keyframes cle-logo-drop {
+	0% {
+		opacity: 0;
+		transform: translateY(-160%) scale(0.9, 1.1);
+	}
+
+	55% {
+		opacity: 1;
+		transform: translateY(0) scale(1.18, 0.8);
+	}
+
+	75% {
+		transform: translateY(-8%) scale(0.94, 1.07);
+	}
+
+	100% {
+		transform: none;
+	}
+}
+
+@keyframes cle-logo-jiggle {
+	0%,
+	100% {
+		transform: none;
+	}
+
+	30% {
+		transform: scale(1.14, 0.86);
+	}
+
+	55% {
+		transform: scale(0.93, 1.08);
+	}
+
+	78% {
+		transform: scale(1.04, 0.97);
+	}
+}

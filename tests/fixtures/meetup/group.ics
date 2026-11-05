@@ -1,0 +1,40 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Meetup//RemoteApi//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:CLE AI & DATA
+BEGIN:VEVENT
+DTSTAMP:20261101T120000Z
+DTSTART;TZID=America/New_York:20261029T180000
+DTEND;TZID=America/New_York:20261029T200000
+STATUS:CONFIRMED
+SUMMARY:Monthly Social at Happy Dog: October
+DESCRIPTION:Come meet people working with AI and data.\n\nHot dogs and talk\,
+  no slides.
+LOCATION:Happy Dog (5801 Detroit Avenue\, Cleveland\, OH 44102)
+GEO:41.4849;-81.7294
+URL:https://www.meetup.com/cleveland-ai-data/events/310000001/
+UID:event_310000001@meetup.com
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261101T120000Z
+DTSTART;TZID=America/New_York:20261112T180000
+DTEND;TZID=America/New_York:20261112T200000
+STATUS:CONFIRMED
+SUMMARY:Monthly Social at Happy Dog: November
+DESCRIPTION:After the clocks change.
+LOCATION:Happy Dog (5801 Detroit Avenue\, Cleveland\, OH 44102)
+URL:https://www.meetup.com/cleveland-ai-data/events/310000002/
+UID:event_310000002@meetup.com
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20261101T120000Z
+DTSTART:20261119T000000Z
+STATUS:CONFIRMED
+SUMMARY:Online reading group
+DESCRIPTION:Remote session.
+URL:https://www.meetup.com/cleveland-ai-data/events/310000003/
+UID:event_310000003@meetup.com
+END:VEVENT
+END:VCALENDAR

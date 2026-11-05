@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/embed-form",
+	"version": "1.0.0",
+	"title": "Embedded form",
+	"category": "widgets",
+	"icon": "feedback",
+	"description": "Shows a form from another service (a Google Form, a Substack signup, a GiveButter donation form) inside the page, with a plain link for anyone whose browser blocks it.",
+	"keywords": [
+		"form",
+		"signup",
+		"newsletter",
+		"google form",
+		"speak",
+		"donate",
+		"givebutter"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"url": {
+			"type": "string",
+			"default": ""
+		},
+		"title": {
+			"type": "string",
+			"default": "Form"
+		},
+		"height": {
+			"type": "number",
+			"default": 720
+		},
+		"linkLabel": {
+			"type": "string",
+			"default": "Open the form in a new tab"
+		},
+		"linkUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"allowPayment": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide"
+		],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

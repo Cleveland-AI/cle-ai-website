@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/world",
+	"version": "1.0.0",
+	"title": "Story world",
+	"category": "theme",
+	"icon": "location-alt",
+	"description": "One illustration of the whole story. As the chapters inside it scroll past, the camera glides to each chapter's part of the picture.",
+	"textdomain": "cle-ai",
+	"attributes": {
+		"align": {
+			"type": "string",
+			"default": "full"
+		},
+		"mode": {
+			"type": "string",
+			"enum": [
+				"stage",
+				"stacked"
+			],
+			"default": "stage"
+		},
+		"imageId": {
+			"type": "number",
+			"default": 0
+		},
+		"alt": {
+			"type": "string",
+			"default": "Illustration of Cleveland: the downtown skyline above a museum auditorium, the Happy Dog bar, a training room and a park trail, all busy with people."
+		}
+	},
+	"providesContext": {
+		"cle/worldImageId": "imageId"
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [
+			"full"
+		]
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [
+		"cle-hotspots",
+		"cle-confetti",
+		"file:./style.css"
+	],
+	"render": "file:./render.php"
+}

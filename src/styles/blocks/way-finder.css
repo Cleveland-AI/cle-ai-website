@@ -1,0 +1,151 @@
+/* cle/way-finder: three rows of clay answer pills, then the recommendation card. */
+.cle-finder {
+	display: grid;
+	gap: var(--wp--preset--spacing--m);
+	padding: var(--wp--preset--spacing--m);
+	background: var(--wp--preset--color--surface-raised);
+	border-radius: var(--wp--custom--clay--card);
+	box-shadow: var(--wp--custom--clay--raised);
+}
+
+.cle-finder__head {
+	display: flex;
+	gap: var(--wp--preset--spacing--m);
+	align-items: center;
+}
+
+.cle-finder__head p {
+	margin: 0;
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-finder__title {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--xl);
+}
+
+.cle-finder__art {
+	flex: none;
+	width: 6rem;
+	height: 6rem;
+	object-fit: contain;
+}
+
+.cle-finder .is-stand-in {
+	padding: 0.8rem;
+}
+
+.cle-finder__form {
+	display: grid;
+	gap: var(--wp--preset--spacing--s);
+}
+
+.cle-finder__q {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.cle-finder__q legend {
+	margin-bottom: var(--wp--preset--spacing--xs);
+	padding: 0;
+	font-weight: 700;
+}
+
+.cle-finder__n {
+	display: inline-grid;
+	place-items: center;
+	width: 1.6rem;
+	height: 1.6rem;
+	margin-right: var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--xs);
+	color: var(--wp--preset--color--ink-blue);
+	background: var(--wp--preset--color--pale-blue);
+	border-radius: 50%;
+}
+
+.cle-finder__options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--xs);
+}
+
+.cle-finder__option {
+	position: relative;
+	cursor: pointer;
+}
+
+.cle-finder__option input {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.cle-finder__option span {
+	display: inline-block;
+	padding: 0.5em 1.1em;
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 600;
+	background: var(--wp--preset--color--surface);
+	border-radius: var(--wp--custom--clay--pill);
+	box-shadow: var(--wp--custom--clay--raised);
+	transition: transform 0.15s;
+}
+
+.cle-finder__option:hover span {
+	transform: translateY(-2px);
+}
+
+.cle-finder__option input:checked + span {
+	color: var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--accent);
+	box-shadow: var(--wp--custom--clay--button);
+	transform: none;
+}
+
+.cle-finder__option input:focus-visible + span {
+	outline: 2px solid var(--wp--preset--color--ink);
+	outline-offset: 3px;
+}
+
+.cle-finder__result {
+	padding: var(--wp--preset--spacing--m);
+	background: var(--wp--preset--color--pale-blue);
+	border-radius: var(--wp--custom--radius);
+}
+
+.cle-finder__result[hidden] {
+	display: none;
+}
+
+.cle-finder__result p {
+	margin: 0;
+}
+
+.cle-finder__eyebrow {
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 600;
+	letter-spacing: var(--wp--custom--letter-spacing--eyebrow);
+	text-transform: uppercase;
+	color: var(--wp--preset--color--ink-blue);
+}
+
+.cle-finder__pick {
+	margin: var(--wp--preset--spacing--xxs) 0 !important;
+	font-size: var(--wp--preset--font-size--xl);
+	font-weight: 700;
+}
+
+.cle-finder__go {
+	margin-top: var(--wp--preset--spacing--s) !important;
+}
+
+html:not(.cle-js) .cle-finder {
+	display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-finder__option span {
+		transition: none;
+	}
+}

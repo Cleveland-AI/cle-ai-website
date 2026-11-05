@@ -1,0 +1,2 @@
+{"_id":"redirect-fixture-old","_type":"redirect","from":"/fixture-old","to":"/events"}
+{"_id":"redirect-bad","_type":"redirect","from":"/fixture-bad","to":"javascript:alert(1)"}

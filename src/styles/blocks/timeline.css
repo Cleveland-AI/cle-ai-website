@@ -1,0 +1,171 @@
+/* Base layout (no JS, or reduced motion): a plain vertical list on a rule. */
+.cle-timeline__axis,
+.cle-timeline__playhead {
+	display: none;
+}
+
+.cle-timeline__items {
+	list-style: none;
+	max-width: var(--wp--style--global--content-size);
+	margin: 0 auto;
+	padding: 0 0 0 var(--wp--preset--spacing--m);
+	border-left: 2px solid var(--wp--preset--color--line);
+}
+
+.cle-timeline__item {
+	position: relative;
+	padding-bottom: var(--wp--preset--spacing--m);
+}
+
+.cle-timeline__marker {
+	position: absolute;
+	left: calc(-1 * var(--wp--preset--spacing--m) - 1px);
+	top: 0.4em;
+	width: var(--wp--preset--spacing--xs);
+	height: var(--wp--preset--spacing--xs);
+	transform: translateX(-50%);
+	background: var(--wp--preset--color--surface);
+	border: 2px solid var(--wp--preset--color--ink);
+}
+
+.is-major > .cle-timeline__marker,
+.is-past > .cle-timeline__marker {
+	background: var(--wp--preset--color--accent);
+	border-color: var(--wp--preset--color--accent);
+}
+
+.is-next > .cle-timeline__marker {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+.cle-timeline__card > * {
+	margin: 0;
+}
+
+.cle-timeline__date {
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 600;
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-timeline__tag {
+	margin-left: var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--xs);
+	font-weight: 700;
+	letter-spacing: var(--wp--custom--letter-spacing--eyebrow);
+	text-transform: uppercase;
+	color: var(--wp--preset--color--ink);
+}
+
+.cle-timeline__title {
+	margin-block: var(--wp--preset--spacing--xxxs);
+	font-size: var(--wp--preset--font-size--l);
+}
+
+.is-event .cle-timeline__title {
+	font-size: var(--wp--preset--font-size--m);
+}
+
+/* Scroll-driven mode. Sticky (not fixed) inside the full-bleed section; the html.cle-js class
+   is set in <head> before paint, so switching modes never causes layout shift. */
+@media (prefers-reduced-motion: no-preference) {
+	.cle-js .wp-block-cle-timeline {
+		height: calc(var(--cle-tl-years) * 22vh + 100vh);
+	}
+
+	.cle-js .cle-timeline__pin {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		height: 100svh;
+		overflow: hidden;
+	}
+
+	.cle-js .cle-timeline__track {
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: calc(var(--cle-tl-years) * var(--wp--custom--timeline--year-width-mobile));
+		transform: translateX(50vw);
+		will-change: transform;
+	}
+
+	.cle-js .cle-timeline__axis {
+		display: block;
+		position: absolute;
+		inset: 62% 0 auto;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-top: 2px solid var(--wp--preset--color--line);
+	}
+
+	.cle-js .cle-timeline__axis li {
+		position: absolute;
+		left: calc(var(--x) * 100%);
+		top: var(--wp--preset--spacing--xs);
+		transform: translateX(-50%);
+		font-size: var(--wp--preset--font-size--s);
+		font-weight: 600;
+		color: var(--wp--preset--color--ink-soft);
+	}
+
+	.cle-js .cle-timeline__items {
+		position: absolute;
+		inset: 0;
+		max-width: none;
+		padding: 0;
+		border: 0;
+	}
+
+	.cle-js .cle-timeline__item {
+		position: absolute;
+		left: calc(var(--x) * 100%);
+		top: 62%;
+		padding: 0;
+	}
+
+	.cle-js .cle-timeline__marker {
+		left: 0;
+		top: 1px;
+		transform: translate(-50%, -50%);
+	}
+
+	.cle-js .cle-timeline__card {
+		position: absolute;
+		left: 0;
+		bottom: var(--wp--preset--spacing--l);
+		width: min(var(--wp--custom--popover--width), 80vw);
+		transform: translateX(calc(-50% + var(--cle-tl-shift, 0px)));
+		padding: var(--wp--preset--spacing--s);
+		background: var(--wp--preset--color--surface-raised);
+		border-top: 4px solid var(--wp--preset--color--accent);
+		border-radius: var(--wp--custom--radius);
+		box-shadow: var(--wp--custom--clay--raised);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s, visibility 0.3s;
+	}
+
+	.cle-js .is-active > .cle-timeline__card,
+	.cle-js .cle-timeline__item:focus-within > .cle-timeline__card {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.cle-js .cle-timeline__playhead {
+		display: block;
+		position: absolute;
+		left: 50%;
+		top: 20%;
+		height: 50%;
+		width: 2px;
+		background: var(--wp--preset--color--accent);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+	.cle-js .cle-timeline__track {
+		width: calc(var(--cle-tl-years) * var(--wp--custom--timeline--year-width));
+	}
+}

@@ -1,0 +1,32 @@
+.wp-block-cle-event-meta p {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+}
+
+.cle-event-meta__status {
+	margin-bottom: var(--wp--preset--spacing--xs);
+}
+
+.wp-block-cle-event-meta.is-past .cle-event-meta__status .cle-eyebrow {
+	background: var(--wp--preset--color--line);
+	/* Task 17 (a11y): on the grey "Past" pill the eyebrow colour is 4.13:1 (theme has the same issue);
+	   10% towards ink (#1468a1) makes 4.61:1 with no visible change. */
+	color: color-mix(in srgb, var(--wp--preset--color--ink-blue) 90%, var(--wp--preset--color--ink));
+}
+
+.cle-event-meta__when,
+.cle-event-meta__venue {
+	font-weight: 600;
+}
+
+.cle-event-meta__where {
+	margin-bottom: var(--wp--preset--spacing--xxs);
+}
+
+.cle-event-meta__address,
+.cle-event-meta__organizer {
+	color: var(--wp--preset--color--ink-soft);
+}
+
+.cle-event-meta__rsvp {
+	padding-top: var(--wp--preset--spacing--xs);
+}

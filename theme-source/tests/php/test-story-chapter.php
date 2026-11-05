@@ -1,0 +1,22 @@
+<?php
+$html = t_render( '<!-- wp:cle/story-chapter {"title":"Just conversation","icon":"chat","layers":["lights","room"],"camera":{"x":21,"y":40,"zoom":2.2}} --><!-- wp:paragraph --><p>Talk</p><!-- /wp:paragraph --><!-- /wp:cle/story-chapter -->' );
+t_assert( str_contains( $html, '<article ' ) && str_contains( $html, 'id="chapter-just-conversation"' ), 'chapter is an article with a stable anchor' );
+preg_match( '/data-chapter="([^"]*)"/', $html, $m );
+$state = json_decode( html_entity_decode( $m[1] ?? '' ), true );
+t_assert( is_array( $state ), 'data-chapter holds JSON' );
+t_assert( 2.2 === $state['camera']['zoom'] && [ 'lights', 'room' ] === $state['layers'], 'state carries camera and layers' );
+t_assert( false === $state['night'] && false === $state['hotspots'] && false === $state['pattern'], 'flags default to false' );
+t_assert( str_contains( $html, '>Talk</p>' ), 'inner blocks render' );
+t_assert( str_contains( $html, 'cle-chapter__crop' ) && str_contains( $html, 'composite.webp' ), 'stacked crop uses the whole scene' );
+t_assert( str_contains( $html, '--cam-z:2.2' ), 'crop carries the camera' );
+t_assert( str_contains( $html, 'cle-icon--chat' ), 'chapter icon renders' );
+$night = t_render( '<!-- wp:cle/story-chapter {"title":"Night","night":true} /-->' );
+t_assert( str_contains( $night, 'is-night-chapter' ) && str_contains( $night, 'neon.webp' ), 'night chapter crops the neon room' );
+$finale = t_render( '<!-- wp:cle/story-chapter {"title":"Come say hi","pattern":true} /-->' );
+t_assert( str_contains( $finale, 'is-pattern-chapter' ) && ! str_contains( $finale, 'cle-chapter__crop' ), 'finale has no crop' );
+t_assert( 'chapter-come-say-hi' === cle_chapter_anchor( [ 'title' => 'Come say hi' ] ), 'anchor slugifies the title' );
+t_assert( '' === cle_chapter_anchor( [] ), 'no title, no anchor' );
+$far = t_render( '<!-- wp:cle/story-chapter {"title":"Sixteen years","camera":{"x":-150,"y":50,"zoom":0.15}} /-->' );
+t_assert( str_contains( $far, '--cam-x:50%;--cam-y:50%;--cam-z:1"' ), 'a zoomed-out camera renders a neutral stacked crop' );
+$edge = t_render( '<!-- wp:cle/story-chapter {"title":"Edge","camera":{"x":80,"y":80,"zoom":2}} /-->' );
+t_assert( str_contains( $edge, '--cam-x:75%;--cam-y:75%;--cam-z:2"' ), 'the stacked crop is clamped so the image always fills its box' );

@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/next-event",
+	"version": "1.0.0",
+	"title": "Next event",
+	"category": "widgets",
+	"icon": "calendar-alt",
+	"description": "The soonest upcoming Meetup event, with date, venue and RSVP link. Updates itself.",
+	"keywords": [ "meetup", "rsvp", "announcement" ],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"layout": { "type": "string", "enum": [ "callout", "bar" ], "default": "callout" },
+		"match": { "type": "string", "default": "" },
+		"eyebrow": { "type": "string", "default": "Next event" },
+		"rsvpLabel": { "type": "string", "default": "RSVP on Meetup" },
+		"showExcerpt": { "type": "boolean", "default": true },
+		"emptyText": { "type": "string", "default": "Nothing on the calendar yet. Join the Meetup group to hear about the next one." },
+		"emptyLinkLabel": { "type": "string", "default": "Join on Meetup" },
+		"emptyLink": { "type": "string", "default": "https://www.meetup.com/cleveland-ai-data/" }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"color": { "background": true, "text": true, "link": true },
+		"spacing": { "padding": true, "margin": true },
+		"typography": { "fontSize": true, "lineHeight": true }
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php"
+}

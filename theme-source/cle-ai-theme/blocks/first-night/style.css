@@ -1,0 +1,192 @@
+/*
+ * cle/first-night. Stacked by default: each moment with its own picture. Wide screens with
+ * motion allowed pin the picture beside the moments; view.js moves data-on along.
+ */
+.cle-night {
+	padding-block: var(--wp--preset--spacing--section);
+	padding-inline: var(--wp--preset--spacing--s);
+}
+
+.cle-night__head,
+.cle-night__body {
+	max-width: var(--wp--style--global--wide-size, 1200px);
+	margin-inline: auto;
+}
+
+.cle-night__head {
+	margin-bottom: var(--wp--preset--spacing--l);
+}
+
+.cle-night__head h2 {
+	margin: 0;
+	text-wrap: balance;
+}
+
+.cle-night__stage {
+	display: none;
+}
+
+.cle-night__steps {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: var(--wp--preset--spacing--l);
+}
+
+.cle-night__step h3 {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+}
+
+.cle-night__step > p:last-of-type {
+	margin: 0;
+}
+
+.cle-night__time {
+	margin: 0 0 var(--wp--preset--spacing--xxs);
+	font-size: var(--wp--preset--font-size--s);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--accent);
+}
+
+.cle-night__own {
+	width: min(60%, 260px);
+	margin-bottom: var(--wp--preset--spacing--xs);
+}
+
+.cle-night__art {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.cle-night__step .wp-block-cle-next-event {
+	margin-top: var(--wp--preset--spacing--m);
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+	.cle-js .cle-night__body {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+		gap: var(--wp--preset--spacing--xl);
+		align-items: start;
+	}
+
+	.cle-js .cle-night__own {
+		display: none;
+	}
+
+	.cle-js .cle-night__stage {
+		display: block;
+		position: sticky;
+		top: calc(50vh - 240px);
+	}
+
+	.cle-night__frames {
+		position: relative;
+		aspect-ratio: 1;
+		max-height: 480px;
+		border-radius: var(--wp--custom--clay--radius, 28px);
+		background: var(--wp--preset--color--surface-raised);
+		box-shadow: var(--wp--custom--clay--raised);
+		overflow: hidden;
+	}
+
+	.cle-night__frame {
+		position: absolute;
+		inset: 0;
+		margin: 0;
+		display: grid;
+		place-items: center;
+		padding: 10%;
+		opacity: 0;
+		transform: translateY(24px) scale(0.96);
+		transition: opacity 0.5s, transform 0.6s cubic-bezier(0.3, 1.2, 0.4, 1);
+	}
+
+	.cle-night__frame .cle-night__art {
+		width: 80%;
+		max-height: 80%;
+		object-fit: contain;
+	}
+
+	.cle-night__frame figcaption {
+		position: absolute;
+		top: var(--wp--preset--spacing--s);
+		left: var(--wp--preset--spacing--s);
+		padding: 0.4em 0.9em;
+		font-size: var(--wp--preset--font-size--s);
+		font-weight: 700;
+		color: var(--wp--preset--color--ink);
+		background: var(--wp--preset--color--surface);
+		border-radius: var(--wp--custom--clay--pill, 999px);
+	}
+
+	.cle-night__dots {
+		list-style: none;
+		margin: var(--wp--preset--spacing--s) 0 0;
+		padding: 0;
+		display: flex;
+		gap: 10px;
+		justify-content: center;
+	}
+
+	.cle-night__dots li {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background: var(--wp--preset--color--pale-blue);
+		transition: transform 0.3s, background-color 0.3s;
+	}
+
+	.cle-js .cle-night__steps {
+		gap: 0;
+	}
+
+	.cle-js .cle-night__step {
+		min-height: 60vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		opacity: 0.35;
+		transition: opacity 0.4s;
+	}
+
+	.cle-js .cle-night__step:last-child {
+		min-height: 70vh;
+	}
+}
+
+/* The moment on screen, by number (data-on counts from 0). */
+.cle-night[data-on="0"] [data-step="0"],
+.cle-night[data-on="1"] [data-step="1"],
+.cle-night[data-on="2"] [data-step="2"],
+.cle-night[data-on="3"] [data-step="3"],
+.cle-night[data-on="4"] [data-step="4"],
+.cle-night[data-on="5"] [data-step="5"],
+.cle-night[data-on="6"] [data-step="6"] {
+	opacity: 1;
+}
+
+.cle-night[data-on="0"] .cle-night__frame[data-step="0"],
+.cle-night[data-on="1"] .cle-night__frame[data-step="1"],
+.cle-night[data-on="2"] .cle-night__frame[data-step="2"],
+.cle-night[data-on="3"] .cle-night__frame[data-step="3"],
+.cle-night[data-on="4"] .cle-night__frame[data-step="4"],
+.cle-night[data-on="5"] .cle-night__frame[data-step="5"],
+.cle-night[data-on="6"] .cle-night__frame[data-step="6"] {
+	transform: none;
+}
+
+.cle-night[data-on="0"] .cle-night__dots [data-step="0"],
+.cle-night[data-on="1"] .cle-night__dots [data-step="1"],
+.cle-night[data-on="2"] .cle-night__dots [data-step="2"],
+.cle-night[data-on="3"] .cle-night__dots [data-step="3"],
+.cle-night[data-on="4"] .cle-night__dots [data-step="4"],
+.cle-night[data-on="5"] .cle-night__dots [data-step="5"],
+.cle-night[data-on="6"] .cle-night__dots [data-step="6"] {
+	background: var(--wp--preset--color--accent);
+	transform: scale(1.25);
+}

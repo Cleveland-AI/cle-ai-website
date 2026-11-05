@@ -1,0 +1,71 @@
+/* cle/mascot: Dot. */
+.cle-dot {
+	width: var(--dot-w, 220px);
+	max-width: 100%;
+	line-height: 0;
+	cursor: pointer;
+	user-select: none;
+}
+
+.cle-dot.aligncenter {
+	margin-inline: auto;
+}
+
+.cle-dot picture {
+	display: block;
+}
+
+.cle-dot__img {
+	display: block;
+	width: 100%;
+	height: auto;
+	transform-origin: 50% 100%;
+}
+
+.cle-dot:hover .cle-dot__img {
+	animation: cle-dot-squish 0.6s ease-out;
+}
+
+/* Peek: hides below the edge it sits on, then rises once it scrolls into view. */
+.cle-dot--peek {
+	overflow: hidden;
+}
+
+.cle-dot--peek.is-waiting .cle-dot__img {
+	transform: translateY(100%);
+	transition: transform 0.7s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.cle-dot--peek.is-waiting.is-in .cle-dot__img {
+	transform: none;
+}
+
+.cle-dot.is-hopping .cle-dot__img {
+	animation: cle-dot-hop 0.8s cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+@keyframes cle-dot-squish {
+	0%, 100% { transform: none; }
+	30% { transform: scale(1.08, 0.92); }
+	55% { transform: scale(0.96, 1.05); }
+}
+
+@keyframes cle-dot-hop {
+	0% { transform: none; }
+	20% { transform: scale(1.12, 0.86); }
+	50% { transform: translateY(-35%) scale(0.94, 1.08) rotate(-8deg); }
+	75% { transform: translateY(0) scale(1.1, 0.9); }
+	100% { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cle-dot--peek.is-waiting .cle-dot__img {
+		transform: none;
+		transition: none;
+	}
+
+	.cle-dot:hover .cle-dot__img,
+	.cle-dot.is-hopping .cle-dot__img {
+		animation: none;
+	}
+}

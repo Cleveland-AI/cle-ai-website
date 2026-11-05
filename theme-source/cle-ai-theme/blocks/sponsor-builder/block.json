@@ -1,0 +1,102 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cle/sponsor-builder",
+	"version": "1.0.0",
+	"title": "Sponsorship builder",
+	"category": "widgets",
+	"icon": "cart",
+	"description": "Companies pick the perks they want, see the matching tier, and send the package as an inquiry.",
+	"keywords": [
+		"sponsor",
+		"tier",
+		"package",
+		"lead"
+	],
+	"textdomain": "cle-ai",
+	"attributes": {
+		"perks": {
+			"type": "array",
+			"default": [
+				{
+					"label": "Your logo on the big screen",
+					"desc": "Before every talk, at every big night this season.",
+					"art": "perk-screen",
+					"weight": 1
+				},
+				{
+					"label": "A table at a big night",
+					"desc": "Meet a few hundred people in the hour after the talks.",
+					"art": "perk-table",
+					"weight": 2
+				},
+				{
+					"label": "A speaking slot",
+					"desc": "Twenty minutes on what your team built.",
+					"art": "microphone",
+					"weight": 3
+				},
+				{
+					"label": "Cover the food",
+					"desc": "Pizza and drinks for a night, with a thank-you from the stage.",
+					"art": "perk-pizza",
+					"weight": 1
+				},
+				{
+					"label": "Host a night in your space",
+					"desc": "Your office, our crowd.",
+					"art": "perk-door",
+					"weight": 2
+				}
+			]
+		},
+		"tiers": {
+			"type": "array",
+			"default": [
+				{
+					"name": "Event sponsor",
+					"min": 1,
+					"price": "$800"
+				},
+				{
+					"name": "Season sponsor",
+					"min": 3,
+					"price": "$1,800"
+				},
+				{
+					"name": "Presenting sponsor",
+					"min": 5,
+					"price": "$2,500"
+				}
+			]
+		},
+		"formUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"email": {
+			"type": "string",
+			"default": "info@cle-ai.com"
+		},
+		"buttonLabel": {
+			"type": "string",
+			"default": "Ask about this package"
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"wide"
+		],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": [
+		"cle-confetti",
+		"file:./style.css"
+	],
+	"render": "file:./render.php"
+}

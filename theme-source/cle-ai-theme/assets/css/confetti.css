@@ -1,0 +1,22 @@
+/* Confetti from assets/js/confetti.js: little clay bits that pop out and fall. */
+.cle-confetti {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.cle-confetti span {
+	position: absolute;
+	width: 9px;
+	height: 12px;
+	border-radius: 3px;
+	box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.18);
+	animation: cle-confetti 1.2s cubic-bezier(0.2, 0.7, 0.4, 1) both;
+}
+
+@keyframes cle-confetti {
+	0% { opacity: 1; transform: translate(-50%, -50%) scale(0.4); }
+	45% { opacity: 1; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(calc(var(--rot) / 2)); }
+	100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 120px)) rotate(var(--rot)); }
+}
